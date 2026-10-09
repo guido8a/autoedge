@@ -43,7 +43,7 @@ class SeleniumController {
     }
 
     def iniciarCargaAnexos() {
-        println "=== Petición iniciarCargaAnexos==="
+        println "=== Petición iniciarCargaAnexos ==="
 
         String numeroOferta = params.id
 
