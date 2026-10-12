@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta name="layout" content="main"/>
-    <title>Panel de Control - Selenium Firefox</title>
+    <title>Panel de Control - Selenium</title>
     <!-- Agregamos Bootstrap vía CDN para que se vea moderno y limpio -->
 %{--    <link rel="stylesheet" href="https://bootstrapcdn.com">--}%
     <asset:javascript src="jquery-3.3.1.min.js"/>
