@@ -86,15 +86,32 @@ class SeleniumController {
      * POST /autoedge/selenium/upload
      */
     def procesaExcel() {
-
-        def f = request.getFile('file')  // 'file' = name del input type=file
+        println "params: $params"
+        def f = request.getFile('file') 
 
         // 1. Validar que el archivo llegó y no está vacío
         if (!f || f.empty) {
             flash.error = "Debes seleccionar un archivo Excel."
             redirect(action: "index")
             return
+        } else {
+            println "archivo con contenido"
         }
+
+        def os = System.getProperty("os.name").toLowerCase()
+        def path = "" 
+
+        if (os.contains("win")) {
+            println "Estás en Windows"
+            path = "C:\\agente\\oferta_${params.obra}" 
+        } else if (os.contains("linux")) {
+            println "Estás en Linux"
+            path = "/var/agente/oferta_${params.obra}" 
+        } else if (os.contains("mac")) {
+            println "Estás en macOS"
+            path = "/var/agente/oferta_${params.obra}" 
+        }
+        new File(path).mkdirs()
 
         // 2. Obtener nombre original y extensión
         def fileName = f.getOriginalFilename()
@@ -107,17 +124,10 @@ class SeleniumController {
             redirect(action: "index")
             return
         }
+        println "archivo xlsx"
 
-        // 4. Construir el nombre final: "xlsApus_<obra>.xlsx"
-        def obra = params.obra ?: "sinObra"
-        def nombreFinal = "xlsApus_" + obra + "." + ext
-
-        // 5. Definir carpeta destino (parametrizable)
-        def path = buildUploadPath()
-        def carpeta = new File(path)
-        if (!carpeta.exists()) {
-            carpeta.mkdirs()
-        }
+        // 4. Construir el nombre final: "oferta_<obra>.xlsx"
+        def nombreFinal = "oferta_" + params.obra + "." + ext
 
         def pathFile = path + File.separator + nombreFinal
 
@@ -126,12 +136,15 @@ class SeleniumController {
         if (oldFile.exists()) {
             oldFile.delete()
         }
-
+        
         // 7. Guardar el archivo subido en el nuevo path
         f.transferTo(new File(pathFile))
+        
 
         // 8. Procesar el Excel
         def htmlInfo = "", errores = "", doneHtml = "", done = 0
+
+        println "inicia procesar excel"
 
         try {
             FileInputStream excelFile = new FileInputStream(pathFile)
@@ -149,20 +162,14 @@ class SeleniumController {
                 txHoja = sheet.getSheetName()
 
                 // Orden numérico del nombre de la hoja (si aplica)
-                def ordn
-                try {
-                    ordn = txHoja.toInteger()
-                } catch (e) {
-                    ordn = 0
-                }
-
                 println "Procesando hoja: $hj --> $txHoja"
 
                 Iterator rows = sheet.rowIterator()
                 def fila = 0
 
                 // -------- Ejemplo: procesar solo la hoja "Archivos" --------
-                if (txHoja == "Archivos") {
+                if (txHoja.toLowerCase() == "archivos") {
+                    println "Procesando la hoja **archivos**"
                     while (rows.hasNext() && (fila < 100)) {
                         XSSFRow row = (XSSFRow) rows.next()
                         fila++
@@ -207,7 +214,12 @@ class SeleniumController {
             flash.error = "Error al procesar el Excel: ${e.message}"
         }
 
-        redirect(action: "index")
+        // redirect(action: "archivoSubido")
+        redirect(action: "upload")
+    }
+
+    def archivoSubido(){
+
     }
 
 }

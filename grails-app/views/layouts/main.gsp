@@ -11,6 +11,12 @@
     
     <%-- Assets JS --%>
     <asset:javascript src="application.js"/>
+    <asset:javascript src="jquery-3.3.1.min.js"/>
+    <asset:javascript src="jquery.validate.min.js"/>
+
+    <script type="text/javascript">
+        var spinner = $('<asset:image src="spinner.gif" style="padding: 40px;"/>');
+    </script>
     <g:layoutHead/>
 </head>
 
