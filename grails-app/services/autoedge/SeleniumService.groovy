@@ -17,16 +17,18 @@ import org.openqa.selenium.support.ui.WebDriverWait
 class SeleniumService {
 
     WebDriver crearDriver() {
+        System.setProperty("SE_DRIVER_MIRROR_URL", "https://msedgedriver.microsoft.com");
+
         EdgeOptions options = new EdgeOptions()
         options.addArguments(
             "--disable-gpu",
             "--no-sandbox",
             "--disable-dev-shm-usage",
             "--start-maximized"
-        )
+        );
         // Selenium Manager (4.28+) descarga automáticamente el driver
         // compatible con la versión de Edge instalada en la máquina
-        return new EdgeDriver(options)
+        return new EdgeDriver(options);
     }
 
     Map probarNavegacion() {
@@ -611,17 +613,18 @@ class SeleniumService {
                 //seleccion de carga de archivos
 
                 def botonArchivos = wait.until(
-                        ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(), 'Seleccione..')]"))
+                        ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Seleccione...')]"))
                 )
                 botonArchivos.click()
 
                 WebElement checkbox = wait.until(
-                        ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), 'uno')]//input[@type='checkbox']"))
+                        // ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), 'uno')]//input[@type='checkbox']"))
+                       ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(normalize-space(), ' anexo')]"))
                 )
 
-                if (!checkbox.isSelected()) {
+                // if (!checkbox.isSelected()) {
                     checkbox.click()
-                }
+                // }
 
 //                //boton guardar
 //

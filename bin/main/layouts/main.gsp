@@ -4,7 +4,6 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title><g:layoutTitle default="Grails"/></title>
-    <asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>
 
     <%-- Assets CSS --%>
     <asset:stylesheet src="application.css"/>
@@ -22,10 +21,10 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
+<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm" >
     <div class="container-lg">
-        <a class="navbar-brand d-flex align-items-center" href="${request.contextPath}/">
-            <asset:image class="w-75" src="grails.svg" alt="Grails Logo"/>
+        <a class="navbar-brand d-flex align-items-center" style="align-items: center;" href="${request.contextPath}/">
+            <i class="fa fa-book text-info fa-2x"></i> MFC automatizado
         </a>
     </div>
 </nav>
