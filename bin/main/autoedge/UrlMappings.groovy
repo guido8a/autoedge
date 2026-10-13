@@ -3,15 +3,11 @@ package autoedge
 class UrlMappings {
 
     static mappings = {
-        "/$namespace/$controller/$action?/$id?(.$format)?" {}
-        "/$controller/$action?/$id?(.$format)?"{
-            constraints {
-                // apply constraints here
-            }
-        }
+        // Redirecciona la raíz directamente al endpoint del controlador
+        "/"(redirect: [controller: "selenium", action: "index"])
 
-        "/"(view:"/index")
-        "500"(view:'/error')
-        "404"(view:'/notFound')
+        "/$controller/$action?/$id?(.$format)?"{}
+        "500"(view: '/error')
+        "404"(view: '/notFound')
     }
 }
