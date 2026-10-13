@@ -3,8 +3,10 @@
 <head>
     <meta name="layout" content="main"/>
     <title>Panel de Control - Selenium Edge</title>
-    <asset:javascript src="jquery-3.3.1.min.js"/>
-    <asset:javascript src="bootstrap-3.3.2/bootstrap.js"/>
+    <!-- Agregamos Bootstrap vía CDN para que se vea moderno y limpio -->
+%{--    <link rel="stylesheet" href="https://bootstrapcdn.com">--}%
+    <%-- <asset:javascript src="jquery-3.3.1.min.js"/> --%>
+    <%-- <asset:javascript src="bootstrap-3.3.2/bootstrap.js"/> --%>
     <asset:javascript src="all.min.js"/>
     <asset:stylesheet src="fontawesome.min.css"/>
 </head>
