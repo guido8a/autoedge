@@ -12,7 +12,7 @@ class SeleniumController {
 
     // Abre el panel visual (index.gsp)
     def index() {
-        render(view: "index")
+       render(view: "index")
     }
 
     def iniciar() {
