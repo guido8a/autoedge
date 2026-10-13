@@ -42,45 +42,48 @@
         <div class="row g-4">
             <div class="col-12 col-md-4">
                 <a class="card h-100 text-decoration-none shadow-sm border-1"
-                   href="https://guides.grails.org" target="_blank" rel="noopener">
+                   href="http://www.tedein.com.ec/agente" target="_blank" rel="noopener">
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h6 class="card-title mb-0 fw-semibold">Grails Guides</h6>
-                            <asset:image src="advancedgrails.svg" alt="Grails Guides" width="34" height="34"/>
+                            <h6 class="card-title mb-0 fw-semibold">Uso del sistema</h6>
+                            <asset:image src="advancedgrails.svg" alt="Uso del sistema" width="34" height="34"/>
                         </div>
                         <p class="card-text text-body-secondary mb-0">
-                            Building your first Grails app? Looking to add security, or create a Single-Page-App?
-                            Check out the Grails Guides for step-by-step tutorials.
+                            El sistema de carga automática de datos al MFC puede ser usado
+                            durante un mes con un único pago de $20, durante este tiempo se
+                            podrá utilizar en forma ilimitada para ofertas que se puedan 
+                            tener en el MFC si pagos adicionales. 
                         </p>
                     </div>
                 </a>
             </div>
             <div class="col-12 col-md-4">
                 <a class="card h-100 text-decoration-none shadow-sm border-1"
-                   href="https://grails.apache.org/docs/" target="_blank" rel="noopener">
+                   href="https://www.tedein.com.ec/agente/manual" target="_blank" rel="noopener">
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h6 class="card-title mb-0 fw-semibold">Documentation</h6>
-                            <asset:image src="documentation.svg" alt="Grails Documentation" width="34" height="34"/>
+                            <h6 class="card-title mb-0 fw-semibold">Documentación</h6>
+                            <asset:image src="documentation.svg" alt="Manual de usuario" width="34" height="34"/>
                         </div>
                         <p class="card-text text-body-secondary mb-0">
-                            Ready to dig in? You can find in-depth documentation for all the features
-                            of Grails in the User Guide.
+                            El manual de uso del sistema permite familirizarse rápidamente con 
+                            su utilización  a partir de un archivo excel se puede cargar los datos
+                            al MFC en una o varias ofertas, hacien reutilizable los datos de personal,
+                            experiencia de la empresa y documentos de anexos.
                         </p>
                     </div>
                 </a>
             </div>
             <div class="col-12 col-md-4">
                 <a class="card h-100 text-decoration-none shadow-sm border-1"
-                   href="https://grails.apache.org/community.html" target="_blank" rel="noopener">
+                   href="http://www.tedein.com.ec" target="_blank" rel="noopener">
                     <div class="card-body p-4">
                         <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h6 class="card-title mb-0 fw-semibold">Join the Community</h6>
-                            <asset:image src="community.svg" alt="Grails Community" width="34" height="34"/>
+                            <h6 class="card-title mb-0 fw-semibold">Otros sistemas como servicio</h6>
+                            <asset:image src="community.svg" alt="Otros sistemas" width="34" height="34"/>
                         </div>
                         <p class="card-text text-body-secondary mb-0">
-                            Get feedback and share your experience with other Grails developers
-                            on the Grails mailing lists, GitHub discussions, or the community Slack channel.
+                            Información de la empresa.
                         </p>
                     </div>
                 </a>
