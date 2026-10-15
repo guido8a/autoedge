@@ -602,28 +602,43 @@ class SeleniumService {
                 def campoValor= wait.until(
                         ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_valorContrato"))
                 )
+                campoValor.click()
                 campoValor.clear()
                 campoValor.sendKeys("100000")
 
                 //focus
 
                 JavascriptExecutor js3 = (JavascriptExecutor) driver
-                js3.executeScript("arguments.focus();", campoValor)
+                // js3.executeScript("arguments[0].focus();", campoValor)
 
                 //seleccion de carga de archivos
 
-                def botonArchivos = wait.until(
-                        ExpectedConditions.elementToBeClickable(By.xpath("//button[contains(text(), 'Seleccione...')]"))
-                )
-                botonArchivos.click()
+                // def xpathBoton = "//button[contains(@class, 'multiselect') and normalize-space()='Seleccione..']"   
+                // def xpathBoton = "//button[contains(@class, 'multiselect')]"      
 
-                WebElement checkbox = wait.until(
-                        // ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), 'uno')]//input[@type='checkbox']"))
-                       ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(normalize-space(), ' anexo')]"))
+                def botonArchivos = wait.until(
+                        // ExpectedConditions.elementToBeClickable(By.xpath(xpathBoton))
+                        ExpectedConditions.elementToBeClickable(By.cssSelector("button.multiselect.dropdown-toggle"))
+                //        ExpectedConditions.elementToBeClickable(By.cssSelector("div.btn-group"))
                 )
+
+
+                js3.executeScript("arguments[0].click();", botonArchivos)
+
+
+                // botonArchivos.click()
+
+                 def xpathOpcionAnexo = "//ul[contains(@class, 'multiselect-container')]//li[descendant::*[normalize-space()='anexo']]"
+                 def opcionAnexo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOpcionAnexo)))
+                opcionAnexo.click()
+
+                // WebElement checkbox = wait.until(
+                //         // ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), 'uno')]//input[@type='checkbox']"))
+                //        ExpectedConditions.elementToBeClickable(By.xpath(xpathBoton))
+                // )
 
                 // if (!checkbox.isSelected()) {
-                    checkbox.click()
+                //     checkbox.click()
                 // }
 
 //                //boton guardar
