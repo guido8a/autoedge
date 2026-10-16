@@ -11,8 +11,8 @@
 <g:uploadForm action="procesaExcel" method="POST" name="frmUpload" enctype="multipart/form-data">
     <div class="row g-3 align-items-end">
         <div class="col-md-2">
-            <label for="obra" class="form-label">Obra:</label>
-            <input type="text" name="obra" id="obra" class="form-control"/>
+            <label for="obra" class="form-label">Oferta:</label>
+            <input type="text" name="ofrt" id="ofrt" class="form-control"/>
         </div>
         <div class="col-md-6">
             <label for="file" class="form-label">Archivo Excel:</label>
