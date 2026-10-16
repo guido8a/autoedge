@@ -597,6 +597,64 @@ class SeleniumService {
                 campoObjeto.clear()
                 campoObjeto.sendKeys("Objeto XX")
 
+                // //valor del contrato
+
+                // def campoValor= wait.until(
+                //         ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_valorContrato"))
+                // )
+                // campoValor.click()
+                // campoValor.clear()
+                // campoValor.sendKeys("100000")
+
+                //seleccion de carga de archivos
+
+                JavascriptExecutor js3 = (JavascriptExecutor) driver   
+
+def botonArchivos = wait3.until(
+    ExpectedConditions.elementToBeClickable(
+        By.xpath("//div[@id='modExpeOfer']" +
+                 "//select[@id='incop_mfc_ofertasbundle_tmepformoferexpeofer_archivos']" +
+                 "/following-sibling::div[@class='btn-group']" +
+                 "/button[contains(@class,'multiselect')]")
+    )
+)
+js3.executeScript("arguments[0].click();", botonArchivos)
+
+
+// Localizar todos los labels (sin filtrar por li disabled)
+def labels = js3.findElements(
+    By.xpath("//div[@id='modExpeOfer']" +
+             "//select[@id='incop_mfc_ofertasbundle_tmepformoferexpeofer_archivos']" +
+             "/following-sibling::div[contains(@class,'btn-group')]" +
+             "//ul[contains(@class,'multiselect-container')]" +
+             "//label")
+)
+
+println "Total labels: ${labels.size()}"
+labels.eachWithIndex { l, i ->
+    println "[${i}] getText()='${l.getText()}' | textContent='${l.getAttribute('textContent')}'"
+}
+
+// Buscar 'anexo' usando textContent (robusto ante elementos ocultos)
+def labelAnexo = labels.find { l ->
+    def texto = (l.getAttribute('textContent') ?: l.getText() ?: '').toString()
+    texto.trim().toLowerCase().contains('anexo')
+}
+
+if (labelAnexo == null) {
+    def disponibles = labels.collect {
+        "'${(it.getAttribute('textContent') ?: it.getText() ?: '').toString().trim()}'"
+    }.join(', ')
+    throw new RuntimeException("No se encontró 'anexo'. Disponibles: [${disponibles}]")
+}
+
+// Clic
+println "Seleccionando: '${labelAnexo.getAttribute('textContent')}'"
+wait3.until(ExpectedConditions.elementToBeClickable(labelAnexo))
+js3.executeScript("arguments[0].scrollIntoView({block:'center'});", labelAnexo)
+js3.executeScript("arguments[0].click();", labelAnexo)
+
+
                 //valor del contrato
 
                 def campoValor= wait.until(
@@ -606,46 +664,42 @@ class SeleniumService {
                 campoValor.clear()
                 campoValor.sendKeys("100000")
 
-                //focus
 
-                JavascriptExecutor js3 = (JavascriptExecutor) driver
-                // js3.executeScript("arguments[0].focus();", campoValor)
-
-                //seleccion de carga de archivos
-
-                // def xpathBoton = "//button[contains(@class, 'multiselect') and normalize-space()='Seleccione..']"   
-                // def xpathBoton = "//button[contains(@class, 'multiselect')]"      
-
-                def botonArchivos = wait.until(
-                        // ExpectedConditions.elementToBeClickable(By.xpath(xpathBoton))
-                        ExpectedConditions.elementToBeClickable(By.cssSelector("button.multiselect.dropdown-toggle"))
-                //        ExpectedConditions.elementToBeClickable(By.cssSelector("div.btn-group"))
-                )
+         //boton guardar
 
 
-                js3.executeScript("arguments[0].click();", botonArchivos)
+def botonesGuardar = js3.findElements(
+    By.xpath("//div[@id='modExpeOfer']" +
+             "//div[contains(@id,'formOferExpeOfer')]" +
+             "/button[@type='submit' and @name='accion']")
+)
 
+def btnGuardar = botonesGuardar.find { it.isDisplayed() }
 
-                // botonArchivos.click()
+if (btnGuardar == null) {
+    throw new RuntimeException("No hay botón Guardar visible en el modal #modExpeOfer")
+}
 
-                 def xpathOpcionAnexo = "//ul[contains(@class, 'multiselect-container')]//li[descendant::*[normalize-space()='anexo']]"
-                 def opcionAnexo = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathOpcionAnexo)))
-                opcionAnexo.click()
+println "Clicando Guardar: value='${btnGuardar.getAttribute('value')}'"
+def urlAntes = js3.getCurrentUrl()
 
-                // WebElement checkbox = wait.until(
-                //         // ExpectedConditions.elementToBeClickable(By.xpath("//label[contains(text(), 'uno')]//input[@type='checkbox']"))
-                //        ExpectedConditions.elementToBeClickable(By.xpath(xpathBoton))
-                // )
+js3.executeScript("arguments[0].scrollIntoView({block:'center'});", btnGuardar)
+js3.executeScript("arguments[0].click();", btnGuardar)
 
-                // if (!checkbox.isSelected()) {
-                //     checkbox.click()
-                // }
+// 4. Esperar a que se procese el submit
+// try {
+//     wait.until(ExpectedConditions.or(
+//         ExpectedConditions.not(ExpectedConditions.urlToBe(urlAntes)),
+//         ExpectedConditions.invisibilityOfElementLocated(
+//             By.cssSelector("div#modExpeOfer.modal.in, div#modExpeOfer.modal.show")
+//         ),
+//         ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.alert"))
+//     ))
+// } catch (Exception e) {
+//     println "Timeout esperando submit, pero puede haber funcionado. Continuando..."
+// }
 
-//                //boton guardar
-//
-//                def guardarAnexo = wait.until(
-//                        ExpectedConditions.elementToBeClickable(By.id("submit")) )
-//                guardarAnexo.click()
+// println "URL después: ${driver.getCurrentUrl()}"
 
 
             }
