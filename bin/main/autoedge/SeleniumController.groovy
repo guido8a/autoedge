@@ -103,13 +103,13 @@ class SeleniumController {
 
         if (os.contains("win")) {
             println "Estás en Windows"
-            path = "C:\\agente\\oferta_${params.obra}" 
+            path = "C:\\agente\\oferta_${params.ofrt}" 
         } else if (os.contains("linux")) {
             println "Estás en Linux"
-            path = "/var/agente/oferta_${params.obra}" 
+            path = "/var/agente/oferta_${params.ofrt}" 
         } else if (os.contains("mac")) {
             println "Estás en macOS"
-            path = "/var/agente/oferta_${params.obra}" 
+            path = "/var/agente/oferta_${params.ofrt}" 
         }
         new File(path).mkdirs()
 
@@ -127,7 +127,7 @@ class SeleniumController {
         println "archivo xlsx"
 
         // 4. Construir el nombre final: "oferta_<obra>.xlsx"
-        def nombreFinal = "oferta_" + params.obra + "." + ext
+        def nombreFinal = "oferta_" + params.ofrt + "." + ext
 
         def pathFile = path + File.separator + nombreFinal
 
