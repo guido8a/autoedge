@@ -20,7 +20,7 @@ class SeleniumService {
         System.setProperty("SE_DRIVER_MIRROR_URL", "https://msedgedriver.microsoft.com");
 
         EdgeOptions options = new EdgeOptions()
-        options.addArguments(
+        options.addAcrearDriverrguments(
             "--disable-gpu",
             "--no-sandbox",
             "--disable-dev-shm-usage",
@@ -266,7 +266,8 @@ class SeleniumService {
     void ejecutarAutomatizacionExperienciaLaboral(int oferta, int personal) {
         println "=== Iniciando ExperienciaLaboral ==="
 
-        WebDriver driver = new EdgeDriver()
+        // WebDriver driver = new EdgeDriver()
+        WebDriver driver = crearDriver()
 
         try {
 
@@ -415,17 +416,16 @@ class SeleniumService {
     void ejecutarAutomatizacionCargaAnexos(int oferta) {
         println "=== Iniciando automatización carga anexos con Edge ==="
 
-        WebDriver driver = new EdgeDriver()
+        // WebDriver driver = new EdgeDriver()
+        WebDriver driver = crearDriver()
 
         try {
-
             WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
             WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
             WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
             WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
 
             driver.get("http://localhost:6012/mfc-oa/web/app.php")
-
             def ingreso = wait2.until(
                     ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
             )
@@ -500,10 +500,90 @@ class SeleniumService {
         }
     }
 
+    void cargaAnexos(int oferta, rgst) {
+        println "=== Inicia carga anexos con $rgst ==="
+        WebDriver driver = crearDriver()
+
+        try {
+            WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
+            WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
+            WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
+            WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
+
+            driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            def ingreso = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
+            )
+            ingreso.click()
+
+            // OFERTAS
+            def abrirOfertas = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
+            )
+            abrirOfertas.click()
+
+            //OFERTA SELECCIONADA
+            if (!verificarSiUrlExiste("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")) {
+                log.error("El proceso se detuvo: La URL no existe o no responde.")
+                driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            } else {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")
+
+                //ANEXOS
+                def ingresoAnexos = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("btnArchivos"))
+                )
+                ingresoAnexos.click()
+
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
+
+                //Descripcion
+                def campoDescripcion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("form_descripcion"))
+                )
+                campoDescripcion.clear()
+                // campoDescripcion.sendKeys("Anexo numero uno")
+                campoDescripcion.sendKeys(rgst[1])  //rgst[1] es la descripción
+
+                //clic antes de cargar
+                def campoArchivo = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.className("input-file"))
+                )
+                campoArchivo.click()
+
+                //cargar archivo
+                String rutaAbsoluta = "C:/agente/anexos/rgst[0]"
+//                String rutaAbsoluta = "C:/Users/USER/anexo.pdf"
+
+                WebElement inputArchivo = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.id("form_file"))
+                )
+
+                inputArchivo.sendKeys(rutaAbsoluta)
+
+                //boton guardar
+                def guardarAnexo = wait.until(
+                        ExpectedConditions.elementToBeClickable(By.id("submit")) )
+                guardarAnexo.click()
+
+            }
+
+        } catch (Exception e ) {
+            println "Ocurrió un error en Selenium: ${e.message}"
+            e.printStackTrace()
+        } finally {
+            if (driver != null) {
+                driver.quit()
+                println "=== Terminado carga de anexo correctamente ==="
+            }
+        }
+    }
+
     void ejecutarAutomatizacionCargaExperienciaOferente(int oferta) {
         println "=== Iniciando automatización carga experiencia oferente con Edge ==="
 
-        WebDriver driver = new EdgeDriver()
+        // WebDriver driver = new EdgeDriver()
+        WebDriver driver = crearDriver()
 
         try {
 

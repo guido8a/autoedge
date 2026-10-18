@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title><g:if env="development">Grails Runtime Exception</g:if><g:else>Error</g:else></title>
+        <title><g:if env="development">Error del sistema</g:if><g:else>Error</g:else></title>
         <meta name="layout" content="main">
         <g:if env="development"><asset:stylesheet src="errors.css"/></g:if>
     </head>
@@ -16,16 +16,16 @@
                 </g:elseif>
                 <g:else>
                     <ul class="errors">
-                        <li>An error has occurred</li>
-                        <li>Exception: ${exception}</li>
-                        <li>Message: ${message}</li>
-                        <li>Path: ${path}</li>
+                        <li>Ha ocurrido un error</li>
+                        <li>Excepción: ${exception}</li>
+                        <li>Mensaje: ${message}</li>
+                        <li>Ruta: ${path}</li>
                     </ul>
                 </g:else>
             </g:if>
             <g:else>
                 <ul class="errors">
-                    <li>An error has occurred</li>
+                    <li>Se ha producido un error</li>
                 </ul>
             </g:else>
         </div>
