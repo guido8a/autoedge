@@ -12,6 +12,8 @@
     <asset:javascript src="application.js"/>
     <asset:javascript src="jquery-3.3.1.min.js"/>
     <asset:javascript src="jquery.validate.min.js"/>
+    <asset:javascript src="all.min.js"/>
+    <asset:stylesheet src="fontawesome.min.css"/>
 
     <script type="text/javascript">
         var spinner = $('<asset:image src="spinner.gif" style="padding: 40px;"/>');

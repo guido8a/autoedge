@@ -20,7 +20,7 @@ class SeleniumService {
         System.setProperty("SE_DRIVER_MIRROR_URL", "https://msedgedriver.microsoft.com");
 
         EdgeOptions options = new EdgeOptions()
-        options.addAcrearDriverrguments(
+        options.addArguments(
             "--disable-gpu",
             "--no-sandbox",
             "--disable-dev-shm-usage",
@@ -500,7 +500,7 @@ class SeleniumService {
         }
     }
 
-    void cargaAnexos(int oferta, rgst) {
+    void cargaAnexos(int oferta, List rgst) {
         println "=== Inicia carga anexos con $rgst ==="
         WebDriver driver = crearDriver()
 
@@ -535,6 +535,9 @@ class SeleniumService {
                 )
                 ingresoAnexos.click()
 
+                rgst.collate(2).each{ fila ->
+                         println("--> " + fila[0])  
+
                 driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
 
                 //Descripcion
@@ -542,8 +545,7 @@ class SeleniumService {
                         ExpectedConditions.visibilityOfElementLocated(By.id("form_descripcion"))
                 )
                 campoDescripcion.clear()
-                // campoDescripcion.sendKeys("Anexo numero uno")
-                campoDescripcion.sendKeys(rgst[1])  //rgst[1] es la descripción
+                campoDescripcion.sendKeys(fila[1]?.toString())  //rgst[1] es la descripción
 
                 //clic antes de cargar
                 def campoArchivo = wait.until(
@@ -552,8 +554,7 @@ class SeleniumService {
                 campoArchivo.click()
 
                 //cargar archivo
-                String rutaAbsoluta = "C:/agente/anexos/rgst[0]"
-//                String rutaAbsoluta = "C:/Users/USER/anexo.pdf"
+                String rutaAbsoluta = "C:/agente/anexos/" + fila[0] + ".pdf"
 
                 WebElement inputArchivo = wait.until(
                         ExpectedConditions.presenceOfElementLocated(By.id("form_file"))
@@ -566,13 +567,16 @@ class SeleniumService {
                         ExpectedConditions.elementToBeClickable(By.id("submit")) )
                 guardarAnexo.click()
 
+                }                             
             }
 
         } catch (Exception e ) {
             println "Ocurrió un error en Selenium: ${e.message}"
             e.printStackTrace()
+           redirect(controller:'selenium', action:'error', params: [error: e.message])
         } finally {
             if (driver != null) {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
                 driver.quit()
                 println "=== Terminado carga de anexo correctamente ==="
             }
@@ -760,26 +764,8 @@ if (btnGuardar == null) {
     throw new RuntimeException("No hay botón Guardar visible en el modal #modExpeOfer")
 }
 
-println "Clicando Guardar: value='${btnGuardar.getAttribute('value')}'"
-def urlAntes = js3.getCurrentUrl()
-
 js3.executeScript("arguments[0].scrollIntoView({block:'center'});", btnGuardar)
 js3.executeScript("arguments[0].click();", btnGuardar)
-
-// 4. Esperar a que se procese el submit
-// try {
-//     wait.until(ExpectedConditions.or(
-//         ExpectedConditions.not(ExpectedConditions.urlToBe(urlAntes)),
-//         ExpectedConditions.invisibilityOfElementLocated(
-//             By.cssSelector("div#modExpeOfer.modal.in, div#modExpeOfer.modal.show")
-//         ),
-//         ExpectedConditions.presenceOfElementLocated(By.cssSelector("div.alert"))
-//     ))
-// } catch (Exception e) {
-//     println "Timeout esperando submit, pero puede haber funcionado. Continuando..."
-// }
-
-// println "URL después: ${driver.getCurrentUrl()}"
 
 
             }

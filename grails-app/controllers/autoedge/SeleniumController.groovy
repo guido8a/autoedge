@@ -140,7 +140,6 @@ class SeleniumController {
         // 7. Guardar el archivo subido en el nuevo path
         f.transferTo(new File(pathFile))
         
-
         // 8. Procesar el Excel
         def htmlInfo = "", errores = "", doneHtml = "", done = 0
 
@@ -155,7 +154,7 @@ class SeleniumController {
 
             def txHoja = "", hjRubro = ""
 
-            // Recorre las hojas (tu lógica original empezaba en hj=1)
+            // Recorre las hojas
             for (int hj = 0; hj < hojas; hj++) {
 
                 XSSFSheet sheet = workbook.getSheetAt(hj)
@@ -170,15 +169,19 @@ class SeleniumController {
                 // -------- Ejemplo: procesar solo la hoja "Archivos" --------
                 if (txHoja.toLowerCase() == "archivos") {
                     println "Procesando la hoja **archivos**"
-                    while (rows.hasNext() && (fila < 100)) {
+
+                    def rgst = []
+
+                    while (rows.hasNext()) {
                         XSSFRow row = (XSSFRow) rows.next()
                         fila++
 
                         Iterator cells = row.cellIterator()
-                        def rgst = []
-
+                       
                         while (cells.hasNext()) {
                             XSSFCell cell = (XSSFCell) cells.next()
+
+                    if(cell.getStringCellValue() != 'Nombre del archivo' && cell.getStringCellValue() != 'Descripción del archivo máx 50c'){
                             switch (cell.getCellType()) {
                                 case CellType.NUMERIC:
                                     rgst.add(cell.getNumericCellValue())
@@ -192,21 +195,61 @@ class SeleniumController {
                                 case CellType.BOOLEAN:
                                     rgst.add(cell.getBooleanCellValue())
                                     break
-                                default:
-                                    rgst.add('')
+                                // default:
+                                //     rgst.add('')
                             }
-                        }
-
-                        // 👇 Aquí usarías los datos para la automatización
-                        println "reg1: $rgst"
-                        if(rgst[0] != 'Nombre del archivo' && rgst[0] && rgst[1]) {
-                            println "procesa --> oferta: ${params.ofrt}, $rgst"
-                            // seleniumService.cargaAnexos(params.oferta, rgst)
-                        }
-
-                        // TODO: llamar a Selenium con rgst
+                            }
+                        }        
                     }
+
+                                  // 👇 Aquí usarías los datos para la automatización
+                        println "reg1: $rgst"
+                        // if(rgst[0] != 'Nombre del archivo' && rgst[0] && rgst[1]) {
+                        //     println "procesa --> oferta: ${params.ofrt}, $rgst"
+                        seleniumService.cargaAnexos(params.ofrt?.toInteger(), rgst)
+                        // }
                 }
+
+
+      // -------- procesar hoja  "empresa" --------
+                // if (txHoja.toLowerCase() == "empresa") {
+                //     println "Procesando la hoja **empresa**"
+                //     while (rows.hasNext() && (fila < 100)) {
+                //         XSSFRow row = (XSSFRow) rows.next()
+                //         fila++
+
+                //         Iterator cells = row.cellIterator()
+                //         def rgst = []
+
+                //         while (cells.hasNext()) {
+                //             XSSFCell cell = (XSSFCell) cells.next()
+                //             switch (cell.getCellType()) {
+                //                 case CellType.NUMERIC:
+                //                     rgst.add(cell.getNumericCellValue())
+                //                     break
+                //                 case CellType.STRING:
+                //                     rgst.add(cell.getStringCellValue())
+                //                     break
+                //                 case CellType.FORMULA:
+                //                     rgst.add(cell.getCellFormula())  // o cell.getRawValue()
+                //                     break
+                //                 case CellType.BOOLEAN:
+                //                     rgst.add(cell.getBooleanCellValue())
+                //                     break
+                //                 default:
+                //                     rgst.add('')
+                //             }
+                //         }
+
+                //         println "reg1: $rgst"
+                //         if(rgst[0] != 'No.' && rgst[0] && rgst[1]) {
+                //             println "procesa --> oferta: ${params.ofrt}, $rgst"
+                //             // seleniumService.cargaAnexos(params.oferta, rgst)
+                //         }
+
+                //     }
+                // }
+
             }
 
             workbook.close()
@@ -224,6 +267,10 @@ class SeleniumController {
 
     def archivoSubido(){
 
+    }
+
+    def error(){
+        return [error: params.error]        
     }
 
 }
