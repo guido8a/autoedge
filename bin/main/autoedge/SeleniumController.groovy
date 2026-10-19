@@ -87,7 +87,7 @@ class SeleniumController {
      */
     def procesaExcel() {
         println "params: $params"
-        def f = request.getFile('file') 
+        def f = request.getFile('archivo') 
 
         // 1. Validar que el archivo llegó y no está vacío
         if (!f || f.empty) {
@@ -199,6 +199,10 @@ class SeleniumController {
 
                         // 👇 Aquí usarías los datos para la automatización
                         println "reg1: $rgst"
+                        if(rgst[0] != 'Nombre del archivo' && rgst[0] && rgst[1]) {
+                            println "procesa --> oferta: ${params.ofrt}, $rgst"
+                            // seleniumService.cargaAnexos(params.oferta, rgst)
+                        }
 
                         // TODO: llamar a Selenium con rgst
                     }
