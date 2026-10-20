@@ -25,14 +25,12 @@ class SeleniumController {
         String numeroOferta = params.id
 
         try {
-            // Se ejecuta la automatización en segundo plano o ventana visible según tu servicio
-            seleniumService.ejecutarAutomatizacion(Integer.parseInt(numeroOferta))
+          seleniumService.ejecutarAutomatizacion(Integer.parseInt(numeroOferta))
 
-            // Respondemos al navegador cuando termine con éxito
-            render status: 200, text: "Automatización completada con éxito"
+            flash.error = "Automatización correcta de ingreso de compromiso de participación en la oferta ${numeroOferta}"
+            redirect(action: "prueba")
         } catch (Exception e) {
-            log.error("Error al ejecutar Selenium desde la web", e)
-            render status: 500, text: "Error en la automatización: ${e.message}"
+              redirect(action: "error", params: [mensajeError: e.message, seccion: "carga de anexos"])
         }
     }
 
@@ -274,7 +272,7 @@ class SeleniumController {
     }
 
     def error(){
-        return [error: params.error]        
+     return [error: params.mensajeError, seccion: params.seccion]    
     }
 
 }
