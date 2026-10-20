@@ -7,13 +7,15 @@
 
     <%-- Assets CSS --%>
     <asset:stylesheet src="application.css"/>
+    <asset:stylesheet src="fontawesome.min.css"/>
     
     <%-- Assets JS --%>
     <asset:javascript src="application.js"/>
     <asset:javascript src="jquery-3.3.1.min.js"/>
     <asset:javascript src="jquery.validate.min.js"/>
     <asset:javascript src="all.min.js"/>
-    <asset:stylesheet src="fontawesome.min.css"/>
+    <asset:javascript src="javascripts/bootbox.min.js"/>
+    
 
     <script type="text/javascript">
         var spinner = $('<asset:image src="spinner.gif" style="padding: 40px;"/>');
@@ -73,20 +75,6 @@
                     </div>
                 </a>
             </div>
-            <%-- <div class="col-12 col-md-4">
-                <a class="card h-100 text-decoration-none shadow-sm border-1"
-                   href="http://www.tedein.com.ec" target="_blank" rel="noopener">
-                    <div class="card-body p-4">
-                        <div class="d-flex align-items-center justify-content-between mb-2">
-                            <h6 class="card-title mb-0 fw-semibold">Otros sistemas como servicio</h6>
-                            <asset:image src="community.svg" alt="Otros sistemas" width="34" height="34"/>
-                        </div>
-                        <p class="card-text text-body-secondary mb-0">
-                            Información de la empresa.
-                        </p>
-                    </div>
-                </a>
-            </div> --%>
         </div>
     </div>
 </footer>
@@ -96,5 +84,6 @@
     </div>
 </div>
 <asset:javascript src="application.js"/>
+
 </body>
 </html>

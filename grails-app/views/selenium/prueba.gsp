@@ -7,9 +7,9 @@
 <body>
 
 <div class="container">
-<div class="row alert alert-primary" style="font-size: 20px;">
+<div class="row" style="font-size: 20px;">
 <div class="col-md-12" style="text-align: center;">
-Prueba de ingreso de datos al MFC
+<i class="fa fa-vial"></i>Prueba de ingreso de datos al MFC
 </div>
 </div>
 </div>
@@ -53,7 +53,7 @@ Prueba de ingreso de datos al MFC
 
 <div class="container " style="text-align: center; margin-top: 10px">
     <div class="row alert alert-success" style="margin-top: 5px;">
-        <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-folder-open"></i> Cargar archivo de anexos</div>
+        <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-upload"></i> Cargar archivo de anexos</div>
          <div class="col-md-2"></div>
         <div class="col-md-2">
             <label style="font-size: 16px">Número de la oferta</label>
@@ -67,13 +67,14 @@ Prueba de ingreso de datos al MFC
     </div>
 </div>
 <div class="container">
-<div class="row alert alert-warning">
-<div class="col-md-12" style="text-align: center;">
-* El archivo de prueba debe tener las siguientes características
+<div class="row ">
+<div class="col-md-3"></div>
+<div class="col-md-6 alert alert-warning" style="text-align: left; font-size: 13px;">
+<i class="fa fa-exclamation-triangle text-warning fa-2x"></i>El archivo de prueba de carga de anexo debe tener las siguientes características:
     <ul>
     <li>El nombre del archivo debe ser "anexo"</li>
     <li>El formato debe ser pdf</li>
-    <li>Debe estar almacenado en C:</li>
+    <li>Debe estar almacenado en C:/agente/anexos</li>
     </ul>
 </div>
 </div>
@@ -99,22 +100,26 @@ Prueba de ingreso de datos al MFC
 
     $("#btnAceptar").click(function () {
         var no = $("#numeroOferta").val();
+        cargarLoader("Cargando...")
         location.href="${createLink(controller: 'selenium', action: 'iniciar')}?id=" + no
     });
 
     $("#btnCargarExperiencia").click(function () {
         var numeroOferta = $("#numeroOfertaExperiencia").val();
         var numeroPersonal = $("#numeroPersonal").val();
+        cargarLoader("Cargando...")
         location.href="${createLink(controller: 'selenium', action: 'iniciarCargaExperienciaLaboral')}?id=" + numeroOferta + "&personal=" + numeroPersonal
     });
 
     $("#btnCargarArchivo").click(function () {
         var no = $("#numeroOfertaCargaArchivo").val();
+        cargarLoader("Cargando...")
         location.href="${createLink(controller: 'selenium', action: 'iniciarCargaAnexos')}?id=" + no
     });
 
     $("#btnCargarExperienciaOferente").click(function () {
         var no = $("#numeroOfertaExperienciaOferente").val();
+        cargarLoader("Cargando...")
         location.href="${createLink(controller: 'selenium', action: 'iniciarCargaExperienciaOferente')}?id=" + no
     });
 

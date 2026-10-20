@@ -253,7 +253,9 @@ class SeleniumService {
 
         } catch (Exception e ) {
             println "Ocurrió un error en Selenium: ${e.message}"
-            e.printStackTrace()
+           e.printStackTrace()
+
+           throw e
         } finally {
             // 5. Asegurar el cierre del proceso de Firefox
             if (driver != null) {
@@ -472,8 +474,7 @@ class SeleniumService {
 
                 //cargar archivo
 
-                String rutaAbsoluta = "C:/Users/Guido/anexo.pdf"
-//                String rutaAbsoluta = "C:/Users/USER/anexo.pdf"
+                String rutaAbsoluta = "C:/agente/anexos/anexo.pdf"
 
                 WebElement inputArchivo = wait.until(
                         ExpectedConditions.presenceOfElementLocated(By.id("form_file"))
