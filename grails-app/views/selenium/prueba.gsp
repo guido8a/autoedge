@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="layout" content="main"/>
+    <title>Panel de Control - Selenium Edge</title>
+</head>
+<body>
+
+<div class="container">
+<div class="row alert alert-primary" style="font-size: 20px;">
+<div class="col-md-12" style="text-align: center;">
+Prueba de ingreso de datos al MFC
+</div>
+</div>
+</div>
+
+<div class="container " style="text-align: center; margin-top: 10px">
+    <div class="row alert alert-success" style="margin-top: 5px;">
+        <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-users"></i> Ingreso de compromiso de participación</div>
+         <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <label style="font-size: 16px">Número de la oferta</label>
+        </div>       
+        <div class="col-md-1">
+            <g:textField name="numero" id="numeroOferta" class="form-control" value="${1}"/>
+        </div>
+        <div class="col-md-2">
+            <a href="#" class="btn btn-success" id="btnAceptar"><i class="fa fa-check"></i> Aceptar</a>
+        </div>
+    </div>
+</div>
+
+<div class="container " style="text-align: center; margin-top: 10px">
+    <div class="row alert alert-success" style="margin-top: 5px;">
+        <div class="col-md-4" style="font-size: 18px; text-align: left;">  <i class="fa fa-list"></i> Ingreso de experiencia laboral</div>
+        <div class="col-md-2">
+            <label style="font-size: 16px">Número de la oferta</label>
+        </div>       
+        <div class="col-md-1">
+              <g:textField name="numeroOfertaExperiencia" id="numeroOfertaExperiencia" class="form-control" value="${1}"/>
+        </div>
+                <div class="col-md-2">
+            <label style="font-size: 16px">Número del personal </label>
+        </div>
+        <div class="col-md-1">
+            <g:textField name="numeroPersonal" id="numeroPersonal" class="form-control" value="${1}"/>
+        </div>
+        <div class="col-md-2">
+           <a href="#" class="btn btn-success" id="btnCargarExperiencia"><i class="fa fa-check"></i> Aceptar</a>
+        </div>
+    </div>
+</div>
+
+<div class="container " style="text-align: center; margin-top: 10px">
+    <div class="row alert alert-success" style="margin-top: 5px;">
+        <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-folder-open"></i> Cargar archivo de anexos</div>
+         <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <label style="font-size: 16px">Número de la oferta</label>
+        </div>       
+        <div class="col-md-1">
+            <g:textField name="numeroOfertaCargaArchivo" id="numeroOfertaCargaArchivo" class="form-control" value="${1}"/>
+        </div>
+        <div class="col-md-2">
+            <a href="#" class="btn btn-success" id="btnCargarArchivo"><i class="fa fa-check"></i> Aceptar</a>
+        </div>
+    </div>
+</div>
+<div class="container">
+<div class="row alert alert-warning">
+<div class="col-md-12" style="text-align: center;">
+* El archivo de prueba debe tener las siguientes características
+    <ul>
+    <li>El nombre del archivo debe ser "anexo"</li>
+    <li>El formato debe ser pdf</li>
+    <li>Debe estar almacenado en C:</li>
+    </ul>
+</div>
+</div>
+</div>
+
+<div class="container " style="text-align: center; margin-top: 10px">
+    <div class="row alert alert-success" style="margin-top: 5px;">
+        <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-address-book"></i> Ingreso experiencia del oferente</div>
+         <div class="col-md-2"></div>
+        <div class="col-md-2">
+            <label style="font-size: 16px">Número de la oferta</label>
+        </div>       
+        <div class="col-md-1">
+           <g:textField name="numeroOfertaExperienciaOferente" id="numeroOfertaExperienciaOferente" class="form-control" value="${1}"/>
+        </div>
+        <div class="col-md-2">
+           <a href="#" class="btn btn-success" id="btnCargarExperienciaOferente"><i class="fa fa-check"></i> Aceptar</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#btnAceptar").click(function () {
+        var no = $("#numeroOferta").val();
+        location.href="${createLink(controller: 'selenium', action: 'iniciar')}?id=" + no
+    });
+
+    $("#btnCargarExperiencia").click(function () {
+        var numeroOferta = $("#numeroOfertaExperiencia").val();
+        var numeroPersonal = $("#numeroPersonal").val();
+        location.href="${createLink(controller: 'selenium', action: 'iniciarCargaExperienciaLaboral')}?id=" + numeroOferta + "&personal=" + numeroPersonal
+    });
+
+    $("#btnCargarArchivo").click(function () {
+        var no = $("#numeroOfertaCargaArchivo").val();
+        location.href="${createLink(controller: 'selenium', action: 'iniciarCargaAnexos')}?id=" + no
+    });
+
+    $("#btnCargarExperienciaOferente").click(function () {
+        var no = $("#numeroOfertaExperienciaOferente").val();
+        location.href="${createLink(controller: 'selenium', action: 'iniciarCargaExperienciaOferente')}?id=" + no
+    });
+
+
+</script>
+
+</body>
+</html>

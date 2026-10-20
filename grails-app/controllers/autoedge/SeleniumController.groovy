@@ -15,6 +15,10 @@ class SeleniumController {
        render(view: "index")
     }
 
+     def prueba() {
+    //    render(view: "prueba")
+    }
+
     def iniciar() {
         println "=== Petición web recibida: Iniciando Selenium ==="
 
