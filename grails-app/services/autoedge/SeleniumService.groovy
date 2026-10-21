@@ -252,9 +252,8 @@ class SeleniumService {
             }
 
         } catch (Exception e ) {
-            println "Ocurrió un error en Selenium: ${e.message}"
+           println "Ocurrió un error en Selenium: ${e.message}"
            e.printStackTrace()
-
            throw e
         } finally {
             // 5. Asegurar el cierre del proceso de Firefox
@@ -287,7 +286,7 @@ class SeleniumService {
             ingreso.click()
 
             // OFERTAS
-//
+
             def abrirOfertas = wait2.until(
                     ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
             )
@@ -336,7 +335,7 @@ class SeleniumService {
                 )
                 campoEmpresa.clear()
                 campoEmpresa.sendKeys("Tedein")
-//
+
                 //contratante
 
                 def campoContratante = wait.until(
@@ -344,7 +343,7 @@ class SeleniumService {
                 )
                 campoContratante.clear()
                 campoContratante.sendKeys("Luis Lopez")
-//
+
                 //proyecto
 
                 def campoProyecto = wait.until(
@@ -393,20 +392,15 @@ class SeleniumService {
                 Select seleccionarTiempoParticipacion= new Select(comboTiempoParticipacion)
                 seleccionarTiempoParticipacion.selectByVisibleText("AÑOS")
 
-
                 def guardarPersonal = wait.until(
                         ExpectedConditions.elementToBeClickable(By.id("guardarExperienciaProfesional")) )
                 guardarPersonal.click()
-
-//                def guardarPersonal2 = wait.until(
-//                        ExpectedConditions.elementToBeClickable(By.id("guardarExperienciaProfesional")) )
-//                guardarPersonal2.click()
-
             }
 
         } catch (Exception e ) {
             println "Ocurrió un error en Selenium: ${e.message}"
             e.printStackTrace()
+            throw e
         } finally {
             if (driver != null) {
                 driver.quit()
@@ -493,6 +487,7 @@ class SeleniumService {
         } catch (Exception e ) {
             println "Ocurrió un error en Selenium: ${e.message}"
             e.printStackTrace()
+             throw e
         } finally {
             if (driver != null) {
                 driver.quit()
@@ -605,7 +600,7 @@ class SeleniumService {
             ingreso.click()
 
             // OFERTAS
-//
+
             def abrirOfertas = wait2.until(
                     ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
             )
@@ -681,17 +676,6 @@ class SeleniumService {
                 )
                 campoObjeto.clear()
                 campoObjeto.sendKeys("Objeto XX")
-
-                // //valor del contrato
-
-                // def campoValor= wait.until(
-                //         ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_valorContrato"))
-                // )
-                // campoValor.click()
-                // campoValor.clear()
-                // campoValor.sendKeys("100000")
-
-                //seleccion de carga de archivos
 
                 JavascriptExecutor js3 = (JavascriptExecutor) driver   
 
@@ -774,6 +758,7 @@ js3.executeScript("arguments[0].click();", btnGuardar)
         } catch (Exception e ) {
             println "Ocurrió un error en Selenium: ${e.message}"
             e.printStackTrace()
+             throw e
         } finally {
             if (driver != null) {
                 driver.quit()
@@ -781,7 +766,6 @@ js3.executeScript("arguments[0].click();", btnGuardar)
             }
         }
     }
-
 
     boolean verificarSiUrlExiste(String urlString) {
         try {

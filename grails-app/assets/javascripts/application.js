@@ -29,6 +29,7 @@
 //= require webjars/jquery/%/dist/jquery.js
 //= require webjars/bootstrap/%/dist/js/bootstrap.bundle.js
 //= require bootbox.min
+//= require jquery.validate.min.js
 //= require_self
 
 // Nota: Eliminamos require_tree para tener control total del orden.

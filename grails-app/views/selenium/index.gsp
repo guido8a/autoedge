@@ -1,134 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="layout" content="main"/>
-    <title>Panel de Control - Selenium Edge</title>
-    <asset:javascript src="all.min.js"/>
-    <asset:stylesheet src="fontawesome.min.css"/>
+    <meta name="layout" content="main2"/>
+    <title> MFC Automatizado</title>
+
+<style>
+
+.hover-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+    will-change: transform, box-shadow, background-color;
+}
+
+.hover-card:hover {
+    transform: translateY(-4px); /* Elevación ligeramente menor para mayor sutileza */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.08) !important; /* Sombra más tenue */
+}
+
+.hover-card-info {
+    background-color: #f7fbfe; /* Casi blanco con un toque azul */
+    border-color: #e2f0fe;
+    color: #055160;
+}
+.hover-card-info:hover {
+    background-color: #ecf4fc !important; /* Cambio de color muy suave */
+    border-color: #d2e6fc !important;
+}
+
+.hover-card-success {
+    background-color: #f8fdfa; /* Casi blanco con un toque verde */
+    border-color: #e2f5ec;
+    color: #0f5132;
+}
+.hover-card-success:hover {
+    background-color: #edfcf4 !important; /* Cambio de color muy suave */
+    border-color: #d1f2e2 !important;
+}
+
+</style>
+
 </head>
 <body>
-  <%-- <div class="container mt-5" style="text-align: center">
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0"><i class="fa fa-robot"></i> MFC automatizado con Selenium</h3>
-        </div>
-    </div>
-</div> --%>
 
-<div class="container " style="text-align: center; margin-top: 10px">
-    <%-- <div class="card shadow">
-        <div class="card-header bg-secondary text-white">
-           <i class="fa fa-users"></i> Ingreso de compromiso de participación
-        </div>
-    </div> --%>
-    <div class="row alert alert-success" style="margin-top: 5px;">
-        <div class="col-md-5" style="font-size: 18px;"> <i class="fa fa-users"></i> Ingreso de compromiso de participación</div>
-         <div class="col-md-2"></div>
-        <div class="col-md-2">
-            <label style="font-size: 16px">Número de la oferta</label>
+<div class="container-lg" style="margin-top: 50px;">
+    <div class="row g-4 justify-content-center">        
+        <div class="col-12 col-md-5">
+            <a class="card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
+               href="${createLink(controller: 'selenium', action: 'prueba')}">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h6 class="card-title mb-0 fw-semibold"><i class="fa fa-vial"></i> Pruebas</h6>                            
+                    </div>
+                    <p class="card-text text-body-secondary mb-0">
+                        Conjunto de pruebas de cargado a los diferentes módulos del MFC usando el sistema de automatización.
+                    </p>
+                </div>
+            </a>
         </div>       
-        <div class="col-md-1">
-            <g:textField name="numero" id="numeroOferta" class="form-control" value="${1}"/>
+        <div class="col-12 col-md-5">
+            <a class="card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-success"
+               href="${createLink(controller: 'selenium', action: 'upload')}">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <h6 class="card-title mb-0 fw-semibold"><i class="fa fa-file-excel"></i>Cargado con excel</h6>
+                    </div>
+                    <p class="card-text text-body-secondary mb-0">
+                        Cargado de datos a los diferentes módulos del MFC mediante un archivo excel personalizado por el usuario.
+                    </p>
+                </div>
+            </a>
         </div>
-        <div class="col-md-2">
-            <a href="#" class="btn btn-success" id="btnAceptar"><i class="fa fa-check"></i> Aceptar</a>
-        </div>
+
     </div>
 </div>
-
-
-<div class="container " style="text-align: center; margin-top: 20px">
-    <div class="card shadow">
-        <div class="card-header bg-secondary text-white">
-            <i class="fa fa-book"></i> Ingreso de experiencia laboral
-        </div>
-    </div>
-    <div class="col-md-12 breadcrumb">
-        <div class="col-md-3"></div>
-        <div class="col-md-2">
-            <label style="font-size: 16px">Número de la oferta</label>
-        </div>
-        <div class="col-md-1">
-            <g:textField name="numeroOfertaExperiencia" id="numeroOfertaExperiencia" class="form-control" value="${1}"/>
-        </div>
-        <div class="col-md-3">
-            <label style="font-size: 16px">Número del personal </label>
-        </div>
-        <div class="col-md-1">
-            <g:textField name="numeroPersonal" id="numeroPersonal" class="form-control" value="${1}"/>
-        </div>
-        <div class="col-md-2">
-            <a href="#" class="btn btn-success" id="btnCargarExperiencia"><i class="fa fa-check"></i> Aceptar</a>
-        </div>
-    </div>
-</div>
-
-<div class="container " style="text-align: center; margin-top: 20px">
-    <div class="card shadow">
-        <div class="card-header bg-secondary text-white">
-            <i class="fa fa-upload"></i> Cargar archivo de anexos
-        </div>
-    </div>
-    <div class="col-md-12 breadcrumb">
-        <div class="col-md-3"></div>
-        <div class="col-md-2">
-            <label style="font-size: 16px">Número de la oferta</label>
-        </div>
-        <div class="col-md-1">
-            <g:textField name="numeroOfertaCargaArchivo" id="numeroOfertaCargaArchivo" class="form-control" value="${1}"/>
-        </div>
-        <div class="col-md-2">
-            <a href="#" class="btn btn-success" id="btnCargarArchivo"><i class="fa fa-check"></i> Aceptar</a>
-        </div>
-    </div>
-</div>
-
-
-<div class="container " style="text-align: center; margin-top: 20px">
-    <div class="card shadow">
-        <div class="card-header bg-secondary text-white">
-            <i class="fa fa-cog"></i> Ingreso experiencia del oferente
-        </div>
-    </div>
-    <div class="col-md-12 breadcrumb">
-        <div class="col-md-3"></div>
-        <div class="col-md-2">
-            <label style="font-size: 16px">Número de la oferta</label>
-        </div>
-        <div class="col-md-1">
-            <g:textField name="numeroOfertaExperienciaOferente" id="numeroOfertaExperienciaOferente" class="form-control" value="${1}"/>
-        </div>
-        <div class="col-md-2">
-            <a href="#" class="btn btn-success" id="btnCargarExperienciaOferente"><i class="fa fa-check"></i> Aceptar</a>
-        </div>
-    </div>
-</div>
-
-
 
 <script type="text/javascript">
-
-    $("#btnAceptar").click(function () {
-        var no = $("#numeroOferta").val();
-        location.href="${createLink(controller: 'selenium', action: 'iniciar')}?id=" + no
-    });
-
-    $("#btnCargarExperiencia").click(function () {
-        var numeroOferta = $("#numeroOfertaExperiencia").val();
-        var numeroPersonal = $("#numeroPersonal").val();
-        location.href="${createLink(controller: 'selenium', action: 'iniciarCargaExperienciaLaboral')}?id=" + numeroOferta + "&personal=" + numeroPersonal
-    });
-
-    $("#btnCargarArchivo").click(function () {
-        var no = $("#numeroOfertaCargaArchivo").val();
-        location.href="${createLink(controller: 'selenium', action: 'iniciarCargaAnexos')}?id=" + no
-    });
-
-    $("#btnCargarExperienciaOferente").click(function () {
-        var no = $("#numeroOfertaExperienciaOferente").val();
-        location.href="${createLink(controller: 'selenium', action: 'iniciarCargaExperienciaOferente')}?id=" + no
-    });
-
 
 </script>
 

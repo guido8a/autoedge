@@ -96,7 +96,15 @@
     </div>
 </div>
 
+    <div class="col-md-2">
+        <a href="#" class="btn btn-success" id="btnRegresar"><i class="fa fa-arrow-left"></i> Regresar</a>
+    </div>
+
 <script type="text/javascript">
+
+    $("#btnRegresar").click(function () {
+        location.href="${createLink(controller: 'selenium', action: 'index')}"
+    });
 
     $("#btnAceptar").click(function () {
         var no = $("#numeroOferta").val();
