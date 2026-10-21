@@ -11,8 +11,8 @@
     
     <%-- Assets JS --%>
     <asset:javascript src="application.js"/>
-    <%-- <asset:javascript src="jquery-3.3.1.min.js"/> --%>
-    <%-- <asset:javascript src="jquery.validate.min.js"/> --%>
+    <asset:javascript src="jquery-3.3.1.min.js"/>
+    <asset:javascript src="jquery.validate.min.js"/>
     <asset:javascript src="all.min.js"/>
     <asset:javascript src="javascripts/bootbox.min.js"/>
     
