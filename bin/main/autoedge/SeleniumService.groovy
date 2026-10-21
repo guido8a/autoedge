@@ -532,7 +532,7 @@ class SeleniumService {
                 ingresoAnexos.click()
 
                 rgst.collate(2).each{ fila ->
-                         println("--> " + fila[0])  
+                    println("--> " + fila[0])  
 
                 driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
 
