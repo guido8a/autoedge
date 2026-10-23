@@ -79,7 +79,7 @@ class SeleniumController {
         }
     }
 
-    
+
 
     //SECCION DE CARGADO DE DATOS CON EXCEL
     def upload() {
@@ -379,22 +379,18 @@ for (int i = 1; i <= sheet.getLastRowNum(); i++) {
                     workbook.close()
                     excelFile.close()
                     redirect(action: "archivoSubido", params: [seccion: " compromiso de participacion EXCEL"])
-                }
-
-         
-
-            
+                }           
         } catch (Exception e) {
-            // log.error("Error procesando el Excel", e)
-            // flash.error = "Error al procesar el Excel: ${e.message}"
             redirect(action: "error", params: [mensajeError: e.message, seccion: " compromiso participacion EXCEL"])
 
         }        
     }
 
+    //EXPERIENCIA LABORAL
      def procesaExcelExperienciaLaboral() {
-        println "params: $params"
-        def f = request.getFile('archivoParticipacion') 
+
+        println "params experien laboral: $params"
+        def f = request.getFile('archivoExperiencia') 
 
         // 1. Validar que el archivo llegó y no está vacío
         if (!f || f.empty) {
@@ -434,7 +430,7 @@ for (int i = 1; i <= sheet.getLastRowNum(); i++) {
         println "archivo xlsx"
 
         // 4. Construir el nombre final: "oferta_<obra>.xlsx"
-        def nombreFinal = "oferta_" + params.ofrtParticipacion + "." + ext
+        def nombreFinal = "excelCompromisoParticipacion_" + params.ofrtExperiencia + "." + ext
 
         def pathFile = path + File.separator + nombreFinal
 
@@ -461,66 +457,94 @@ for (int i = 1; i <= sheet.getLastRowNum(); i++) {
 
             def txHoja = "", hjRubro = ""
 
-            // Recorre las hojas
-            for (int hj = 0; hj < hojas; hj++) {
-
-                XSSFSheet sheet = workbook.getSheetAt(hj)
+                XSSFSheet sheet = workbook.getSheetAt(3)
                 txHoja = sheet.getSheetName()
 
-                // Orden numérico del nombre de la hoja (si aplica)
-                println "Procesando hoja: $hj --> $txHoja"
+                println "Procesando hoja: 4 --> $txHoja"
 
                 Iterator rows = sheet.rowIterator()
                 def fila = 0
 
-                // -------- Ejemplo: procesar solo la hoja "Archivos" --------
-                if (txHoja.toLowerCase() == "archivos") {
-                    println "Procesando la hoja **archivos**"
+                // -------- procesar solo la hoja "experiencia" --------
+                if (txHoja.toLowerCase() == "experiencia") {
+                    println "Procesando la hoja **experiencia**"
 
                     def rgst = []
+                    def dataFormatter = new DataFormatter()
 
-                    while (rows.hasNext()) {
-                        XSSFRow row = (XSSFRow) rows.next()
-                        fila++
+                // Empezamos el bucle en 1 para saltarnos la primera fila (índice 0)
+                for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                     XSSFRow row = sheet.getRow(i)
+    
+    // Si la fila está completamente vacía en el Excel, la saltamos para evitar NullPointerException
+    if (row == null) continue 
 
-                        Iterator cells = row.cellIterator()
-                       
-                        while (cells.hasNext()) {
-                            XSSFCell cell = (XSSFCell) cells.next()
-
-                    if(cell.getStringCellValue() != 'Nombre del archivo' && cell.getStringCellValue() != 'Descripción del archivo máx 50c'){
-                            switch (cell.getCellType()) {
-                                case CellType.NUMERIC:
-                                    rgst.add(cell.getNumericCellValue())
-                                    break
-                                case CellType.STRING:
-                                    rgst.add(cell.getStringCellValue())
-                                    break
-                                case CellType.FORMULA:
-                                    rgst.add(cell.getCellFormula())  // o cell.getRawValue()
-                                    break
-                                case CellType.BOOLEAN:
-                                    rgst.add(cell.getBooleanCellValue())
-                                    break
-                            }
-                            }
-                        }        
-                    }
-                        println "reg1: $rgst"
-                        seleniumService.cargaAnexos(params.ofrt?.toInteger(), rgst)
-                }
-
-            }
-
-            workbook.close()
-            excelFile.close()
-
-            flash.message = "Archivo '${nombreFinal}' subido y procesado correctamente."
-        } catch (Exception e) {
-            log.error("Error procesando el Excel", e)
-            flash.error = "Error al procesar el Excel: ${e.message}"
+    // 1. Verificación previa: ¿La fila tiene contenido real?
+    boolean filaTieneDatos = false
+    for (int colCheck = 1; colCheck <= 14; colCheck++) {
+        XSSFCell cellCheck = row.getCell(colCheck)
+        if (cellCheck != null && cellCheck.getCellType() != CellType.BLANK) {
+            filaTieneDatos = true
+            break // Encontramos al menos un dato, la fila es válida
         }
-        redirect(action: "upload")
+    }
+
+    // Si la fila está completamente vacía (fantasma), la ignoramos por completo
+    if (!filaTieneDatos) {
+        continue
+    }
+    fila++
+
+    // Empezamos el bucle en 1 para saltarnos la primera columna (índice 0)
+    for (int j = 1; j <= 14; j++) {
+        XSSFCell cell = row.getCell(j)
+
+        // Si la celda es nula o está en blanco, añadimos un valor vacío para mantener la estructura
+        if (cell == null || cell.getCellType() == CellType.BLANK) {
+            rgst.add("")
+            continue
+        }
+
+        switch (cell.getCellType()) {
+                     case CellType.NUMERIC:
+                if (j == 2 || j == 11) {
+                    rgst.add(dataFormatter.formatCellValue(cell).trim())
+                } else {
+                    rgst.add(cell.getNumericCellValue())
+                }
+                break
+            case CellType.STRING:
+                rgst.add(cell.getStringCellValue().trim())
+                break
+            case CellType.FORMULA:
+                try {
+                    switch (cell.getCachedFormulaResultType()) {
+                        case CellType.STRING: rgst.add(cell.getStringCellValue().trim()); break
+                        case CellType.NUMERIC: rgst.add(cell.getNumericCellValue()); break
+                        default: rgst.add(cell.getCellFormula().trim())
+                    }
+                } catch (Exception e) {
+                    rgst.add(cell.getCellFormula().trim())
+                }
+                break
+            case CellType.BOOLEAN:
+                rgst.add(cell.getBooleanCellValue())
+                break
+        }
+    }        
+}
+                    println "reg1: $rgst"
+                  def listaOriginal = seleniumService.ejecutarCargaCompromiso(params.ofrtExperiencia?.toInteger(), rgst)
+                 flash.correctos = listaOriginal ? listaOriginal.collate(2) : []
+                    workbook.close()
+                    excelFile.close()
+                    redirect(action: "archivoSubido", params: [seccion: " compromiso de participacion EXCEL"])
+                }           
+        } catch (Exception e) {
+            redirect(action: "error", params: [mensajeError: e.message, seccion: " compromiso participacion EXCEL"])
+
+        }   
+
     }
 
       def procesaExcelExperienciaOferente() {

@@ -940,14 +940,6 @@ js3.executeScript("arguments[0].click();", btnGuardar)
                 Select seleccionarTiempoParticipacion= new Select(comboTiempoParticipacion)
                 seleccionarTiempoParticipacion.selectByVisibleText(fila[11]?.toString())
                  
-                //funcion
-
-                def campoFuncion= wait.until(
-                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
-                )
-                campoFuncion.clear()
-                campoFuncion.sendKeys(fila[12]?.toString())
-
                 //observaciones
 
                 def campoObservacion= wait.until(
@@ -956,12 +948,20 @@ js3.executeScript("arguments[0].click();", btnGuardar)
                 campoObservacion.clear()
                 campoObservacion.sendKeys(fila[13]?.toString())
 
+                 //funcion
+
+                def campoFuncion= wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
+                )
+                campoFuncion.clear()
+                campoFuncion.sendKeys(fila[12]?.toString())
+
                 //clic focus en algo
                 // def campoFuncion2= wait.until(
                 //         ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
                 // )
                 //   campoFuncion2.click()
-                  js2.findElement(By.id("comproPartici_cargoConsCp")).click()
+                //   js2.findElement(By.id("comproPartici_cargoConsCp")).click()
 
                 //boton guardar
 
