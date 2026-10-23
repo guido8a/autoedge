@@ -13,7 +13,6 @@ import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
-import org.openqa.selenium.Keys
 
 class SeleniumService {
 
@@ -958,10 +957,11 @@ js3.executeScript("arguments[0].click();", btnGuardar)
                 campoObservacion.sendKeys(fila[13]?.toString())
 
                 //clic focus en algo
-                def campoFuncion2= wait.until(
-                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
-                )
-                  campoFuncion2.click()
+                // def campoFuncion2= wait.until(
+                //         ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
+                // )
+                //   campoFuncion2.click()
+                  js2.findElement(By.id("comproPartici_cargoConsCp")).click()
 
                 //boton guardar
 
