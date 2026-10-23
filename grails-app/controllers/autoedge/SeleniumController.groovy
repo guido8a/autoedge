@@ -185,33 +185,33 @@ class SeleniumController {
                         while (cells.hasNext()) {
                             XSSFCell cell = (XSSFCell) cells.next()
 
-                    if(cell.getStringCellValue() != 'Nombre del archivo' && cell.getStringCellValue() != 'Descripción del archivo máx 50c'){
-                            switch (cell.getCellType()) {
-                                case CellType.NUMERIC:
-                                    rgst.add(cell.getNumericCellValue())
-                                    break
-                                case CellType.STRING:
-                                    rgst.add(cell.getStringCellValue())
-                                    break
-                                case CellType.FORMULA:
-                                    rgst.add(cell.getCellFormula())  // o cell.getRawValue()
-                                    break
-                                case CellType.BOOLEAN:
-                                    rgst.add(cell.getBooleanCellValue())
-                                    break
-                                // default:
-                                //     rgst.add('')
-                            }
+                            if(cell.getStringCellValue() != 'Nombre del archivo' && cell.getStringCellValue() != 'Descripción del archivo máx 50c'){
+                                switch (cell.getCellType()) {
+                                    case CellType.NUMERIC:
+                                        rgst.add(cell.getNumericCellValue())
+                                        break
+                                    case CellType.STRING:
+                                        rgst.add(cell.getStringCellValue())
+                                        break
+                                    case CellType.FORMULA:
+                                        rgst.add(cell.getCellFormula())  // o cell.getRawValue()
+                                        break
+                                    case CellType.BOOLEAN:
+                                        rgst.add(cell.getBooleanCellValue())
+                                        break
+                                    // default:
+                                    //     rgst.add('')
+                                }
                             }
                         }        
                     }
 
-                                  // 👇 Aquí usarías los datos para la automatización
-                        println "reg1: $rgst"
-                        // if(rgst[0] != 'Nombre del archivo' && rgst[0] && rgst[1]) {
-                        //     println "procesa --> oferta: ${params.ofrt}, $rgst"
-                        seleniumService.cargaAnexos(params.ofrt?.toInteger(), rgst)
-                        // }
+                    // 👇 Aquí usarías los datos para la automatización
+                    println "reg1: $rgst"
+                    // if(rgst[0] != 'Nombre del archivo' && rgst[0] && rgst[1]) {
+                    //     println "procesa --> oferta: ${params.ofrt}, $rgst"
+                    seleniumService.cargaAnexos(params.ofrt?.toInteger(), rgst)
+                    // }
                 }
             }
 
@@ -228,7 +228,7 @@ class SeleniumController {
         redirect(action: "upload")
     }
 
-     def procesaExcelParticipacion() {
+    def procesaExcelParticipacion() {
         println "params participacion: $params"
         def f = request.getFile('archivoParticipacion') 
 
@@ -312,67 +312,67 @@ class SeleniumController {
                     def rgst = []
                     def dataFormatter = new DataFormatter()
 
-// Empezamos el bucle en 1 para saltarnos la primera fila (índice 0)
-for (int i = 1; i <= sheet.getLastRowNum(); i++) {
-    XSSFRow row = sheet.getRow(i)
-    
-    // Si la fila está completamente vacía en el Excel, la saltamos para evitar NullPointerException
-    if (row == null) continue 
-
-    // 1. Verificación previa: ¿La fila tiene contenido real?
-    boolean filaTieneDatos = false
-    for (int colCheck = 1; colCheck <= 14; colCheck++) {
-        XSSFCell cellCheck = row.getCell(colCheck)
-        if (cellCheck != null && cellCheck.getCellType() != CellType.BLANK) {
-            filaTieneDatos = true
-            break // Encontramos al menos un dato, la fila es válida
-        }
-    }
-
-    // Si la fila está completamente vacía (fantasma), la ignoramos por completo
-    if (!filaTieneDatos) {
-        continue
-    }
-    fila++
-
-    // Empezamos el bucle en 1 para saltarnos la primera columna (índice 0)
-    for (int j = 1; j <= 14; j++) {
-        XSSFCell cell = row.getCell(j)
-
-        // Si la celda es nula o está en blanco, añadimos un valor vacío para mantener la estructura
-        if (cell == null || cell.getCellType() == CellType.BLANK) {
-            rgst.add("")
-            continue
-        }
-
-        switch (cell.getCellType()) {
-                     case CellType.NUMERIC:
-                if (j == 2 || j == 11) {
-                    rgst.add(dataFormatter.formatCellValue(cell).trim())
-                } else {
-                    rgst.add(cell.getNumericCellValue())
-                }
-                break
-            case CellType.STRING:
-                rgst.add(cell.getStringCellValue().trim())
-                break
-            case CellType.FORMULA:
-                try {
-                    switch (cell.getCachedFormulaResultType()) {
-                        case CellType.STRING: rgst.add(cell.getStringCellValue().trim()); break
-                        case CellType.NUMERIC: rgst.add(cell.getNumericCellValue()); break
-                        default: rgst.add(cell.getCellFormula().trim())
+                    // Empezamos el bucle en 1 para saltarnos la primera fila (índice 0)
+                    for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                        XSSFRow row = sheet.getRow(i)
+                        
+                        // Si la fila está completamente vacía en el Excel, la saltamos para evitar NullPointerException
+                        if (row == null) continue 
+                    
+                        // 1. Verificación previa: ¿La fila tiene contenido real?
+                        boolean filaTieneDatos = false
+                        for (int colCheck = 1; colCheck <= 14; colCheck++) {
+                            XSSFCell cellCheck = row.getCell(colCheck)
+                            if (cellCheck != null && cellCheck.getCellType() != CellType.BLANK) {
+                                filaTieneDatos = true
+                                break // Encontramos al menos un dato, la fila es válida
+                            }
+                        }
+                    
+                        // Si la fila está completamente vacía (fantasma), la ignoramos por completo
+                        if (!filaTieneDatos) {
+                            continue
+                        }
+                        fila++
+                    
+                        // Empezamos el bucle en 1 para saltarnos la primera columna (índice 0)
+                        for (int j = 1; j <= 14; j++) {
+                            XSSFCell cell = row.getCell(j)
+                    
+                            // Si la celda es nula o está en blanco, añadimos un valor vacío para mantener la estructura
+                            if (cell == null || cell.getCellType() == CellType.BLANK) {
+                                rgst.add("")
+                                continue
+                            }
+                    
+                            switch (cell.getCellType()) {
+                                         case CellType.NUMERIC:
+                                    if (j == 2 || j == 11) {
+                                        rgst.add(dataFormatter.formatCellValue(cell).trim())
+                                    } else {
+                                        rgst.add(cell.getNumericCellValue())
+                                    }
+                                    break
+                                case CellType.STRING:
+                                    rgst.add(cell.getStringCellValue().trim())
+                                    break
+                                case CellType.FORMULA:
+                                    try {
+                                        switch (cell.getCachedFormulaResultType()) {
+                                            case CellType.STRING: rgst.add(cell.getStringCellValue().trim()); break
+                                            case CellType.NUMERIC: rgst.add(cell.getNumericCellValue()); break
+                                            default: rgst.add(cell.getCellFormula().trim())
+                                        }
+                                    } catch (Exception e) {
+                                        rgst.add(cell.getCellFormula().trim())
+                                    }
+                                    break
+                                case CellType.BOOLEAN:
+                                    rgst.add(cell.getBooleanCellValue())
+                                    break
+                            }
+                        }        
                     }
-                } catch (Exception e) {
-                    rgst.add(cell.getCellFormula().trim())
-                }
-                break
-            case CellType.BOOLEAN:
-                rgst.add(cell.getBooleanCellValue())
-                break
-        }
-    }        
-}
                     println "reg1: $rgst"
                   def listaOriginal = seleniumService.ejecutarCargaCompromiso(params.ofrtParticipacion?.toInteger(), rgst)
                  flash.correctos = listaOriginal ? listaOriginal.collate(2) : []
