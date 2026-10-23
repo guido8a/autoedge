@@ -45,7 +45,7 @@
     <div class="row g-4 justify-content-center">        
         <div class="col-12 col-md-5">
             <a class="card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
-               href="${createLink(controller: 'selenium', action: 'prueba')}">
+               href="${createLink(controller: 'selenium', action: 'prueba')}" onclick="cargar()">
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <h6 class="card-title mb-0 fw-semibold"><i class="fa fa-vial"></i> Pruebas</h6>                            
@@ -58,7 +58,7 @@
         </div>       
         <div class="col-12 col-md-5">
             <a class="card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-success"
-               href="${createLink(controller: 'selenium', action: 'upload')}">
+               href="${createLink(controller: 'selenium', action: 'upload')}" onclick="cargar()" >
                 <div class="card-body p-4">
                     <div class="d-flex align-items-center justify-content-between mb-2">
                         <h6 class="card-title mb-0 fw-semibold"><i class="fa fa-file-excel"></i>Cargado con excel</h6>
@@ -74,6 +74,10 @@
 </div>
 
 <script type="text/javascript">
+
+function cargar() {
+    cargarLoader("Cargando...")
+}
 
 </script>
 

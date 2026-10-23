@@ -26,7 +26,7 @@
 
         $("#btnRegresar").click(function () {
             cargarLoader("Cargando...")
-            location.href = "${createLink(controller: 'selenium', action: 'prueba')}"
+            location.href = "${createLink(controller: 'selenium', action: 'index')}"
         });
 
     </script>

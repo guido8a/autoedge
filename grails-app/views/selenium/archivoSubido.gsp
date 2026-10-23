@@ -1,38 +1,48 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta name="layout" content="main"/>
-    <title>Subir Excel</title>
+    <meta name="layout" content="main" />
+    <title>ERROR - Selenium Edge</title>
 </head>
+
 <body>
 
-<h2>Resumen del archivo</h2>
+    <div class="container " style="margin-top: 10px">
+        <div class="row alert alert-success" style="margin-top: 5px;">
+            <div class="col-md-12" style="font-size: 18px; text-align: center;"> <i
+                    class="fa fa-thumbs-up fa-2x"></i>Automatización de ${seccion} realizada correctamente
+            </div>
+        </div>
+        <%-- <div class="row alert alert-warning" style="margin-top: 5px;">
+            <div class="col-md-12" style="font-size: 18px;"> <i class="fa fa-times"></i> ERRORES: ${error}</div>
+        </div> --%>
+        <div class="row alert alert-success" style="margin-top: 5px;">
+            <div class="col-md-12" style="font-size: 18px;"> <i class="fa fa-check fa-2x texty-info"></i> Cargados correctamente: </div>
+            <ul>
+                <g:each var="correcto" in="${ flash.correctos }">
+                    <li>
+                      <strong> ${correcto[0]} </strong> ${correcto[1]}
+                    </li>
+                </g:each>
+            </ul>
 
-    <div class="row g-3 align-items-end">
-        <div class="col-md-2">
-            <label for="obra" class="form-label">Obra:</label>
-            <input type="text" name="obra" id="obra" class="form-control"/>
-        </div>
-        <div class="col-md-6">
-            <label for="file" class="form-label">Archivo Excel:</label>
-            <input type="file" name="file" id="file" accept=".xlsx" class="form-control"/>
-        </div>
-        <div class="col-md-2" style="margin-left: 0px">
-            <a href="#" class="btn btn-success" id="btnSubmit">Aceptar</a>
         </div>
     </div>
 
+    <div class="col-md-2">
+        <a href="#" class="btn btn-success" id="btnRegresar"><i class="fa fa-arrow-left"></i> Regresar</a>
+    </div>
 
-<script type="text/javascript">
-    $(function () {
-        $("#btnSubmit").click(function () {
-            if ($("#frmUpload").valid()) {
-                $(this).replaceWith(spinner);
-                $("#frmUpload").submit();
-            }
+    <script type="text/javascript">
+
+        $("#btnRegresar").click(function () {
+            cargarLoader("Cargando...")
+            location.href = "${createLink(controller: 'selenium', action: 'index')}"
         });
-    });
-</script>
+
+    </script>
 
 </body>
+
 </html>

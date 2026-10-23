@@ -15,7 +15,7 @@
 </div>
 
 <div class="container " style="text-align: center; margin-top: 10px">
-    <div class="row alert alert-success" style="margin-top: 5px;">
+    <div class="row alert alert-info" style="margin-top: 5px;">
         <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-users"></i> Ingreso de compromiso de participación</div>
          <div class="col-md-2"></div>
         <div class="col-md-2">
@@ -31,7 +31,7 @@
 </div>
 
 <div class="container " style="text-align: center; margin-top: 10px">
-    <div class="row alert alert-success" style="margin-top: 5px;">
+    <div class="row alert alert-info" style="margin-top: 5px;">
         <div class="col-md-4" style="font-size: 18px; text-align: left;">  <i class="fa fa-list"></i> Ingreso de experiencia laboral</div>
         <div class="col-md-2">
             <label style="font-size: 16px">Número de la oferta</label>
@@ -52,7 +52,7 @@
 </div>
 
 <div class="container " style="text-align: center; margin-top: 10px">
-    <div class="row alert alert-success" style="margin-top: 5px;">
+    <div class="row alert alert-info" style="margin-top: 5px;">
         <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-upload"></i> Cargar archivo de anexos</div>
          <div class="col-md-2"></div>
         <div class="col-md-2">
@@ -81,7 +81,7 @@
 </div>
 
 <div class="container " style="text-align: center; margin-top: 10px">
-    <div class="row alert alert-success" style="margin-top: 5px;">
+    <div class="row alert alert-info" style="margin-top: 5px;">
         <div class="col-md-5" style="font-size: 18px; text-align: left;"> <i class="fa fa-address-book"></i> Ingreso experiencia del oferente</div>
          <div class="col-md-2"></div>
         <div class="col-md-2">

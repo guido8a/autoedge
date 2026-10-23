@@ -767,6 +767,225 @@ js3.executeScript("arguments[0].click();", btnGuardar)
         }
     }
 
+   
+   
+        //CARGA DE EXCEL
+
+        def ejecutarCargaCompromiso(int oferta, List rgst) {
+        println "=== Iniciando automatización compromiso participacion con excel ==="
+        def correctos = []
+        WebDriver driver = crearDriver()
+
+        try {
+            // 3. Inicializar el navegador
+
+            WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
+            WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
+            WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
+            WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
+            driver.get("http://localhost:6012/mfc-oa/web/app.php")
+
+
+            def ingreso = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
+            )
+            ingreso.click()
+
+            // OFERTAS
+
+            def abrirOfertas = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
+            )
+            abrirOfertas.click()
+
+            //OFERTA SELECCIONADA
+
+            if (!verificarSiUrlExiste("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")) {
+                log.error("El proceso se detuvo: La URL no existe o no responde.")
+                driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            } else {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")
+
+                //COMPROMISO DE PARTICIPACION
+
+                def ingresoCompromiso = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("btnFormularioCompromisoParticipacion"))
+                )
+                ingresoCompromiso.click()
+
+                //Hoja de vida
+              
+                rgst.collate(14).each{fila->
+                        println("--> " + fila) 
+               
+                //Agregar
+
+                def agregarPersonal = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("agregarPersonalTecnico"))
+                )
+                agregarPersonal.click()
+         
+                //tipo de documento
+                def comboUno = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_tipoDocumentoCp"))
+                )
+                Select seleccionarTipoDocumento = new Select(comboUno)
+                seleccionarTipoDocumento.selectByVisibleText(fila[0]?.toString())
+               
+                //numero documento
+
+                def campoNumeroDocumento = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_numeroDocumentoCp"))
+                )
+                campoNumeroDocumento.clear()
+                campoNumeroDocumento.sendKeys(fila[1])
+            
+                //nombre completo
+
+                def campoNombreCompleto = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_nombresCp"))
+                )
+                campoNombreCompleto.clear()
+                campoNombreCompleto.sendKeys(fila[2]?.toString())
+           
+                //Lugar Nacimiento
+
+                def campoLugarNacimiento = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_lugarNacimientoCp"))
+                )
+                campoLugarNacimiento.clear()
+                campoLugarNacimiento.sendKeys(fila[3]?.toString())
+         
+                //fecha de nacimiento
+
+                WebElement inputFecha = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.id("comproPartici_fechaNacimientoCp"))
+                )
+
+                JavascriptExecutor js = (JavascriptExecutor) driver
+
+                js.executeScript("arguments[0].removeAttribute('readonly');", inputFecha)
+
+                inputFecha.clear()
+                inputFecha.sendKeys(fila[4]?.toString())
+
+                js.executeScript("arguments[0].dispatchEvent(new Event('change'));", inputFecha)
+                js.executeScript("arguments[0].dispatchEvent(new Event('blur'));", inputFecha)
+
+                //nacionalidad
+
+                def campoNacionalidad = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_nacionalidadCp"))
+                )
+                campoNacionalidad.clear()
+                campoNacionalidad.sendKeys(fila[5]?.toString())
+         
+                //nivel de estudio
+
+                def comboNE = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_nivelEstudioCodCp"))
+                )
+                Select seleccionarNivelEstudio = new Select(comboNE)
+                seleccionarNivelEstudio.selectByVisibleText(fila[6]?.toString())
+         
+                //titulacion
+
+                def campoTitulacion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_tituloProfesionalCp"))
+                )
+                campoTitulacion.clear()
+                campoTitulacion.sendKeys(fila[7]?.toString())
+    
+                //fecha de graduacion
+
+                WebElement inputFechaGraduacion = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.id("comproPartici_fechaGraduacionCp"))
+                )
+
+                JavascriptExecutor js2 = (JavascriptExecutor) driver
+
+                js2.executeScript("arguments[0].removeAttribute('readonly');", inputFechaGraduacion)
+
+                inputFechaGraduacion.clear()
+                inputFechaGraduacion.sendKeys(fila[8]?.toString())
+
+                js2.executeScript("arguments[0].dispatchEvent(new Event('change'));", inputFechaGraduacion)
+                js2.executeScript("arguments[0].dispatchEvent(new Event('blur'));", inputFechaGraduacion)
+             
+                //titulo IV nivel
+
+                def campoTitulo = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_tituloCuartoNivCp"))
+                )
+                campoTitulo.clear()
+                campoTitulo.sendKeys(fila[9]?.toString() ?: '')
+             
+                 //tiempo de participacion
+
+                def campoTiempoParticipacion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_tiempoPartiCp"))
+                )
+                campoTiempoParticipacion.clear()
+                campoTiempoParticipacion.sendKeys(fila[10])
+             
+                 //tiempo de participacion seleccion
+
+                def comboTiempoParticipacion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_tiempoPartiCpMedida"))
+                )
+                Select seleccionarTiempoParticipacion= new Select(comboTiempoParticipacion)
+                seleccionarTiempoParticipacion.selectByVisibleText(fila[11]?.toString())
+                 
+                //funcion
+
+                def campoFuncion= wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
+                )
+                campoFuncion.clear()
+                campoFuncion.sendKeys(fila[12]?.toString())
+
+                //observaciones
+
+                def campoObservacion= wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_observacionesCp"))
+                )
+                campoObservacion.clear()
+                campoObservacion.sendKeys(fila[13]?.toString())
+
+                //clic focus en algo
+
+                campoFuncion.click()
+
+                //boton guardar
+
+                def guardarPersonal = wait.until(
+                        ExpectedConditions.elementToBeClickable(By.id("guardarPersonalTecnico")) )
+                guardarPersonal.click()
+
+                correctos.add(fila[1]?.toString())
+                correctos.add(fila[2]?.toString())
+
+                        }
+              
+                }
+                println("corectos " + correctos)
+                return correctos
+
+        } catch (Exception e ) {
+           println "Ocurrió un error en Selenium: ${e.message}"
+           e.printStackTrace()
+           throw e
+        } finally {
+            // 5. Asegurar el cierre del proceso de Firefox
+            if (driver != null) {
+                driver.quit()
+                println "=== Terminado correctamente ==="
+            }
+        }
+    }
+
+
+
     boolean verificarSiUrlExiste(String urlString) {
         try {
             URL url = new URL(urlString)
