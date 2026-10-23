@@ -956,7 +956,7 @@ js3.executeScript("arguments[0].click();", btnGuardar)
                 def campoFuncion2= wait.until(
                         ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
                 )
-                  campoFuncion2click()
+                  campoFuncion2.click()
 
                 //boton guardar
 
