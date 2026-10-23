@@ -13,6 +13,7 @@ import org.openqa.selenium.remote.DesiredCapabilities
 import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.Select
 import org.openqa.selenium.support.ui.WebDriverWait
+import org.openqa.selenium.Keys
 
 class SeleniumService {
 
@@ -871,6 +872,8 @@ js3.executeScript("arguments[0].click();", btnGuardar)
 
                 js.executeScript("arguments[0].dispatchEvent(new Event('change'));", inputFecha)
                 js.executeScript("arguments[0].dispatchEvent(new Event('blur'));", inputFecha)
+                js.executeScript("document.activeElement.blur();")
+
 
                 //nacionalidad
 
@@ -911,6 +914,8 @@ js3.executeScript("arguments[0].click();", btnGuardar)
 
                 js2.executeScript("arguments[0].dispatchEvent(new Event('change'));", inputFechaGraduacion)
                 js2.executeScript("arguments[0].dispatchEvent(new Event('blur'));", inputFechaGraduacion)
+                js2.executeScript("document.activeElement.blur();")
+
              
                 //titulo IV nivel
 
