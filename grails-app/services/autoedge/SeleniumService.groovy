@@ -953,8 +953,10 @@ js3.executeScript("arguments[0].click();", btnGuardar)
                 campoObservacion.sendKeys(fila[13]?.toString())
 
                 //clic focus en algo
-
-                campoFuncion.click()
+                def campoFuncion2= wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_cargoConsCp"))
+                )
+                  campoFuncion2click()
 
                 //boton guardar
 
