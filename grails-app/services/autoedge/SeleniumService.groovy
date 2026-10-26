@@ -1099,19 +1099,17 @@ class SeleniumService {
                 
                 //boton guardar
                    def guardarPersonal = wait.until(
-                            // ExpectedConditions.presenceOfElementLocated(By.id("guardarExperienciaProfesional"))
                               ExpectedConditions.elementToBeClickable(By.id("guardarExperienciaProfesional")) 
 
                     )
-                // clickSeguro(guardarPersonal, "Agregar")
       
                     guardarPersonal.click();
     
                     correctos.add(fila[1]?.toString())
                     correctos.add(fila[2]?.toString())
-
                 }
-             
+
+                return correctos             
             }
 
         } catch (Exception e ) {
