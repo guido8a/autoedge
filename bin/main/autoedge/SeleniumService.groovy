@@ -496,90 +496,7 @@ class SeleniumService {
         }
     }
 
-    void cargaAnexos(int oferta, List rgst) {
-        println "=== Inicia carga anexos con $rgst ==="
-        WebDriver driver = crearDriver()
-
-        try {
-            WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
-            WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
-            WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
-            WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
-
-            driver.get("http://localhost:6012/mfc-oa/web/app.php")
-            def ingreso = wait2.until(
-                    ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
-            )
-            ingreso.click()
-
-            // OFERTAS
-            def abrirOfertas = wait2.until(
-                    ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
-            )
-            abrirOfertas.click()
-
-            //OFERTA SELECCIONADA
-            if (!verificarSiUrlExiste("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")) {
-                log.error("El proceso se detuvo: La URL no existe o no responde.")
-                driver.get("http://localhost:6012/mfc-oa/web/app.php")
-            } else {
-                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")
-
-                //ANEXOS
-                def ingresoAnexos = wait.until(
-                        ExpectedConditions.visibilityOfElementLocated(By.id("btnArchivos"))
-                )
-                ingresoAnexos.click()
-
-                rgst.collate(2).each{ fila ->
-                    println("--> " + fila[0])  
-
-                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
-
-                //Descripcion
-                def campoDescripcion = wait.until(
-                        ExpectedConditions.visibilityOfElementLocated(By.id("form_descripcion"))
-                )
-                campoDescripcion.clear()
-                campoDescripcion.sendKeys(fila[1]?.toString())  //rgst[1] es la descripción
-
-                //clic antes de cargar
-                def campoArchivo = wait.until(
-                        ExpectedConditions.visibilityOfElementLocated(By.className("input-file"))
-                )
-                campoArchivo.click()
-
-                //cargar archivo
-                String rutaAbsoluta = "C:/agente/anexos/" + fila[0] + ".pdf"
-
-                WebElement inputArchivo = wait.until(
-                        ExpectedConditions.presenceOfElementLocated(By.id("form_file"))
-                )
-
-                inputArchivo.sendKeys(rutaAbsoluta)
-
-                //boton guardar
-                def guardarAnexo = wait.until(
-                        ExpectedConditions.elementToBeClickable(By.id("submit")) )
-                guardarAnexo.click()
-
-                }                             
-            }
-
-        } catch (Exception e ) {
-            println "Ocurrió un error en Selenium: ${e.message}"
-            e.printStackTrace()
-           redirect(controller:'selenium', action:'error', params: [error: e.message])
-        } finally {
-            if (driver != null) {
-                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
-                driver.quit()
-                println "=== Terminado carga de anexo correctamente ==="
-            }
-        }
-    }
-
-    void ejecutarAutomatizacionCargaExperienciaOferente(int oferta) {
+   void ejecutarAutomatizacionCargaExperienciaOferente(int oferta) {
         println "=== Iniciando automatización carga experiencia oferente con Edge ==="
 
         // WebDriver driver = new EdgeDriver()
@@ -763,16 +680,15 @@ class SeleniumService {
             }
         }
     }
-
   
-    //CARGA DE EXCEL compromiso participacion
+    //CARGA DE EXCEL 
+    // compromiso participacion
     def ejecutarCargaCompromiso(int oferta, List rgst) {
         println "=== Iniciando automatización compromiso participacion con excel ==="
         def correctos = []
         WebDriver driver = crearDriver()
     
         try {
-            // 3. Inicializar el navegador
             WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
             WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
             WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
@@ -1004,7 +920,291 @@ class SeleniumService {
             // 5. Asegurar el cierre del proceso
             if (driver != null) {
                 driver.quit()
-                println "=== Terminado correctamente ==="
+                println "=== Terminado carga de compromiso correctamente ==="
+            }
+        }
+    }
+
+        void ejecutarCargaExperienciaLaboral(int oferta, List rgst) {
+        println "=== Iniciando carga excel ExperienciaLaboral ==="
+        def correctos = []
+        WebDriver driver = crearDriver()
+
+        try {
+
+            WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
+            WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
+            WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
+            WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
+      
+            JavascriptExecutor js = (JavascriptExecutor) driver
+    
+            // Helper: clic robusto (scroll + fallback JS) para evitar "element click intercepted"
+            def clickSeguro = { WebElement el, String nombre ->
+                try {
+                    js.executeScript("arguments[0].scrollIntoView({block:'center'});", el)
+                    Thread.sleep(200)
+                    try {
+                        wait.until(ExpectedConditions.elementToBeClickable(el)).click()
+                    } catch (Exception e1) {
+                        println "Clic normal en '${nombre}' interceptado; usando JS: ${e1.message}"
+                        js.executeScript("arguments[0].click();", el)
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("No se pudo hacer clic en '${nombre}': ${e.message}", e)
+                }
+            } 
+
+              // Helper: seleccionar por texto tolerando vacíos, espacios y mayúsculas
+            def seleccionarPorTexto = { WebElement comboEl, String valor, String nombreCampo, boolean requerido ->
+                if (valor == null || valor.trim().isEmpty()) {
+                    if (requerido) {
+                        throw new RuntimeException("Combo '${nombreCampo}' es requerido y llegó vacío")
+                    }
+                    println "AVISO: combo '${nombreCampo}' sin valor; se deja por defecto"
+                    return
+                }
+                Select sel = new Select(comboEl)
+                def opciones = sel.getOptions().collect { it.getText()?.trim() ?: '' }
+                def norm = { String s -> s == null ? '' : s.trim().replaceAll('\\s+',' ').toLowerCase() }
+                def v = valor.trim()
+    
+                def match = opciones.find { it == v }
+                if (match == null) match = opciones.find { it.equalsIgnoreCase(v) }
+                if (match == null) {
+                    def vn = norm(v)
+                    match = opciones.find { norm(it) == vn }
+                }
+                if (match == null) {
+                    throw new RuntimeException(
+                        "No existe opción '${v}' en combo '${nombreCampo}'. Opciones: ${opciones}")
+                }
+                sel.selectByVisibleText(match)
+            }   
+
+           driver.get("http://localhost:6012/mfc-oa/web/app.php")    
+
+            def ingreso = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
+            )
+            ingreso.click()
+
+            // OFERTAS
+
+            def abrirOfertas = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
+            )
+            abrirOfertas.click()
+
+            //OFERTA SELECCIONADA
+
+            if (!verificarSiUrlExiste("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")) {
+                log.error("El proceso se detuvo: La URL no existe o no responde.")
+                driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            } else {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")
+
+                //ingreso compromiso participacion
+
+                def ingresoCompromiso = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("btnFormularioCompromisoParticipacion"))
+                )
+                ingresoCompromiso.click()
+
+                rgst.collate(9).each { fila ->
+                    println("--> " + fila)
+                    
+                //identificar los td de la tabla
+
+                String xpathSegundoBoton = "//td[text()='${fila[0]}']/parent::tr/td[last()]//button[2]"
+                WebElement segundoBoton = driver.findElement(By.xpath(xpathSegundoBoton))
+                String idDelBoton = segundoBoton.getAttribute("idpersonal")
+
+                println "El ID del segundo botón es: " + idDelBoton
+                    
+                //EXPERIENCIA LABORAL
+
+                String selectorCss = ".btnExpPro[idpersonal='${idDelBoton}']"
+                WebElement ingresarExperiencia = wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector(selectorCss)))
+                ingresarExperiencia.click()
+
+                def agregarExperienciaProfesional = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("agregarExperienciaProfesional"))
+                )
+                agregarExperienciaProfesional.click()
+                
+                //empresa
+
+                def campoEmpresa = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_empresaEp"))
+                )
+                campoEmpresa.clear()
+                campoEmpresa.sendKeys(fila[1]?.toString() ?: '')
+                
+                //contratante
+
+                def campoContratante = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_contratanteEp"))
+                )
+                campoContratante.clear()
+                campoContratante.sendKeys(fila[2]?.toString() ?: '') 
+
+                //proyecto
+
+                    def campoProyecto = wait.until(
+                         ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_proyectoEp"))
+                )
+                campoProyecto.clear()
+                campoProyecto.sendKeys(fila[3]?.toString() ?: '')
+
+                //monto
+
+                def campoMonto = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_montoProyecyoEp"))
+                )
+                campoMonto.clear()
+                campoMonto.sendKeys(fila[4]?.toString() ?: '')
+
+                //tiempo de participacion
+
+                def campoTiempoParticipacion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_tiempoPartiConsCp"))
+                )
+                campoTiempoParticipacion.clear()
+                campoTiempoParticipacion.sendKeys(fila[6]?.toString() ?: '')
+                
+                //tiempo de participacion seleccion
+
+                def comboTiempoParticipacion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_tiempoPartiConsCpMedida"))
+                )
+                Select seleccionarTiempoParticipacion= new Select(comboTiempoParticipacion)
+                seleccionarTiempoParticipacion.selectByVisibleText(fila[7]?.toString() ?: '')
+
+                //actividades relevantes
+
+                def campoActividades= wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_activiRelevEp"))
+                )
+                campoActividades.clear()
+                campoActividades.sendKeys(fila[8]?.toString() ?: '')
+
+                //funcion
+
+                def campoFuncion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("expProfe_cargoEp"))
+                )
+                campoFuncion.clear()
+                campoFuncion.sendKeys(fila[5]?.toString() ?: '')
+                
+                //boton guardar
+                   def guardarPersonal = wait.until(
+                            // ExpectedConditions.presenceOfElementLocated(By.id("guardarExperienciaProfesional"))
+                              ExpectedConditions.elementToBeClickable(By.id("guardarExperienciaProfesional")) 
+
+                    )
+                // clickSeguro(guardarPersonal, "Agregar")
+      
+                    guardarPersonal.click();
+    
+                    correctos.add(fila[1]?.toString())
+                    correctos.add(fila[2]?.toString())
+
+                }
+             
+            }
+
+        } catch (Exception e ) {
+            println "Ocurrió un error en Selenium: ${e.message}"
+            e.printStackTrace()
+            throw e
+        } finally {
+            if (driver != null) {
+                driver.quit()
+                println "=== Terminado carga experiencia laboral correctamente ==="
+            }
+        }
+    } 
+
+     void cargaAnexos(int oferta, List rgst) {
+        println "=== Inicia carga anexos con $rgst ==="
+        WebDriver driver = crearDriver()
+
+        try {
+            WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
+            WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
+            WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
+            WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
+
+            driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            def ingreso = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
+            )
+            ingreso.click()
+
+            // OFERTAS
+            def abrirOfertas = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
+            )
+            abrirOfertas.click()
+
+            //OFERTA SELECCIONADA
+            if (!verificarSiUrlExiste("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")) {
+                log.error("El proceso se detuvo: La URL no existe o no responde.")
+                driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            } else {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")
+
+                //ANEXOS
+                def ingresoAnexos = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("btnArchivos"))
+                )
+                ingresoAnexos.click()
+
+                rgst.collate(2).each{ fila ->
+                    println("--> " + fila[0])  
+
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
+
+                //Descripcion
+                def campoDescripcion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("form_descripcion"))
+                )
+                campoDescripcion.clear()
+                campoDescripcion.sendKeys(fila[1]?.toString())  //rgst[1] es la descripción
+
+                //clic antes de cargar
+                def campoArchivo = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.className("input-file"))
+                )
+                campoArchivo.click()
+
+                //cargar archivo
+                String rutaAbsoluta = "C:/agente/anexos/" + fila[0] + ".pdf"
+
+                WebElement inputArchivo = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.id("form_file"))
+                )
+
+                inputArchivo.sendKeys(rutaAbsoluta)
+
+                //boton guardar
+                def guardarAnexo = wait.until(
+                        ExpectedConditions.elementToBeClickable(By.id("submit")) )
+                guardarAnexo.click()
+
+                }                             
+            }
+
+        } catch (Exception e ) {
+            println "Ocurrió un error en Selenium: ${e.message}"
+            e.printStackTrace()
+           redirect(controller:'selenium', action:'error', params: [error: e.message])
+        } finally {
+            if (driver != null) {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
+                driver.quit()
+                println "=== Terminado carga de anexo correctamente ==="
             }
         }
     }
