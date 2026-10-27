@@ -925,7 +925,7 @@ class SeleniumService {
         }
     }
 
-        void ejecutarCargaExperienciaLaboral(int oferta, List rgst) {
+    def ejecutarCargaExperienciaLaboral(int oferta, List rgst) {
         println "=== Iniciando carga excel ExperienciaLaboral ==="
         def correctos = []
         WebDriver driver = crearDriver()
@@ -1125,7 +1125,7 @@ class SeleniumService {
     } 
 
      void cargaAnexos(int oferta, List rgst) {
-        println "=== Inicia carga anexos con $rgst ==="
+        println "=== Inicia carga anexos con excel ==="
         WebDriver driver = crearDriver()
 
         try {
@@ -1202,7 +1202,221 @@ class SeleniumService {
             if (driver != null) {
                 driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
                 driver.quit()
-                println "=== Terminado carga de anexo correctamente ==="
+                println "=== Terminado carga de anexo con excel correctamente ==="
+            }
+        }
+    }
+
+   def ejecutarCargaExperienciaOferente(int oferta, List rgst) {
+        println "=== Iniciando carga experiencia oferente con excel ==="
+
+        // WebDriver driver = new EdgeDriver()
+        WebDriver driver = crearDriver()
+        def correctos = []
+
+        try {
+
+            WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
+            WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
+            WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
+            WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
+
+            driver.get("http://localhost:6012/mfc-oa/web/app.php")
+
+            def ingreso = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
+            )
+            ingreso.click()
+
+            // OFERTAS
+
+            def abrirOfertas = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
+            )
+            abrirOfertas.click()
+
+            //OFERTA SELECCIONADA
+
+            if (!verificarSiUrlExiste("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")) {
+                log.error("El proceso se detuvo: La URL no existe o no responde.")
+                driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            } else {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")
+
+                //formulario de oferta
+
+                def ingresoFormularioOferta = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("btnFormularioOferta"))
+                )
+                ingresoFormularioOferta.click()
+
+                //seleccion de acordeon 4
+
+                def abrirAcordeonCuatro = wait.until(
+                        ExpectedConditions.elementToBeClickable(By.xpath("//*[contains(text(), 'EXPERIENCIA OFERENTE')]"))
+                )
+                abrirAcordeonCuatro.click()
+
+                rgst.collate(7).each { fila ->
+                    println("--> " + fila)
+                
+                //clic boton agregar
+
+                WebElement botonJS = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.cssSelector("[href='#modExpeOfer']"))
+                )
+
+                JavascriptExecutor js = (JavascriptExecutor) driver
+                js.executeScript("arguments[0].click();", botonJS)
+                
+                //Tipo
+
+                def comboTipo = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_tipo"))
+                )
+                Select seleccionarTipo= new Select(comboTipo)
+                seleccionarTipo.selectByVisibleText(fila[1]?.toString())
+                
+                //contratante
+
+                def campoDescripcion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_contratante"))
+                )
+                campoDescripcion.clear()
+                campoDescripcion.sendKeys(fila[2]?.toString() ?: '')
+             
+                //fecha de recepcion
+                           
+                    WebElement inputFecha = wait.until(
+                            ExpectedConditions.presenceOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_fechaRecepcion"))
+                    )
+                    js.executeScript("arguments[0].removeAttribute('readonly');", inputFecha)
+                    inputFecha.clear()
+                    inputFecha.sendKeys(fila[5]?.toString() ?: '')
+                    js.executeScript("arguments[0].dispatchEvent(new Event('change'));", inputFecha)
+                    js.executeScript("arguments[0].dispatchEvent(new Event('blur'));", inputFecha)
+                    // Cerrar datepicker
+                    js.executeScript(
+                        "if (window.jQuery && jQuery.datepicker) { try { jQuery(arguments[0]).datepicker('hide'); } catch(e){} }" +
+                        "document.querySelectorAll('.ui-datepicker, .datepicker, .datepicker-dropdown, .p-datepicker').forEach(function(el){ el.style.display='none'; });",
+                        inputFecha
+                    )
+                    js.executeScript("if (document.activeElement) { document.activeElement.blur(); }")
+
+                // //fecha de recepcion
+
+                // WebElement inputFechaRecepcion = wait.until(
+                //         ExpectedConditions.presenceOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_fechaRecepcion"))
+                // )
+
+                // JavascriptExecutor js2 = (JavascriptExecutor) driver
+
+                // js2.executeScript("arguments[0].removeAttribute('readonly');", inputFechaRecepcion)
+
+                // inputFechaRecepcion.clear()
+                // inputFechaRecepcion.sendKeys(fila[5]?.toString())
+
+                // js2.executeScript("arguments[0].dispatchEvent(new Event('change'));", inputFechaRecepcion)
+                // js2.executeScript("arguments[0].dispatchEvent(new Event('blur'));", inputFechaRecepcion)
+            
+                //objeto
+
+                def campoObjeto= wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_objetoContrato"))
+                )
+                campoObjeto.clear()
+                campoObjeto.sendKeys(fila[3]?.toString() ?: '')
+            
+                //anexo
+
+                JavascriptExecutor js3 = (JavascriptExecutor) driver   
+
+                def botonArchivos = wait3.until(
+                    ExpectedConditions.elementToBeClickable(
+                        By.xpath("//div[@id='modExpeOfer']" +
+                                 "//select[@id='incop_mfc_ofertasbundle_tmepformoferexpeofer_archivos']" +
+                                 "/following-sibling::div[@class='btn-group']" +
+                                 "/button[contains(@class,'multiselect')]")
+                    )
+                )
+                js3.executeScript("arguments[0].click();", botonArchivos)
+
+                def norm = { s -> (s ?: '').toString().replaceAll(/\s+/, ' ').trim().toLowerCase() }
+                def buscado = norm(fila[6])
+
+                println ">>> Buscando: '${buscado}'  (raw fila[6]='${fila[6]}')"
+
+                def labels = js3.findElements(
+                    By.xpath("//div[@id='modExpeOfer']" +
+                            "//select[@id='incop_mfc_ofertasbundle_tmepformoferexpeofer_archivos']" +
+                            "/following-sibling::div[contains(@class,'btn-group')]" +
+                            "//ul[contains(@class,'multiselect-container')]" +
+                            "//label")
+                )
+
+                    println ">>> Total labels: ${labels.size()}"
+                    labels.eachWithIndex { l, i ->
+                        println "[${i}] normalizado='${norm(l.getAttribute('textContent') ?: l.getText())}'"
+                    }
+
+                    def labelAnexo = labels.find { l ->
+                        norm(l.getAttribute('textContent') ?: l.getText()).contains(buscado)
+                    }
+
+                    if (labelAnexo == null) {
+                        def disp = labels.collect { "'${norm(it.getAttribute('textContent') ?: it.getText())}'" }.join(' | ')
+                        throw new RuntimeException("No se encontró '${buscado}'. Disponibles: [${disp}]")
+                    }
+
+                    println "Seleccionando: '${norm(labelAnexo.getAttribute('textContent'))}'"
+                    wait3.until(ExpectedConditions.elementToBeClickable(labelAnexo))
+                    js3.executeScript("arguments[0].scrollIntoView({block:'center'});", labelAnexo)
+                    js3.executeScript("arguments[0].click();", labelAnexo)
+
+               // valor del contrato
+
+                def campoValor= wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_valorContrato"))
+                )
+                campoValor.click()
+                campoValor.clear()
+                campoValor.sendKeys(fila[4]?.toString())
+
+                //boton guardar
+
+                def botonesGuardar = js3.findElements(
+                    By.xpath("//div[@id='modExpeOfer']" +
+                             "//div[contains(@id,'formOferExpeOfer')]" +
+                             "/button[@type='submit' and @name='accion']")
+                )
+
+                def btnGuardar = botonesGuardar.find { it.isDisplayed() }
+
+                if (btnGuardar == null) {
+                    throw new RuntimeException("No hay botón Guardar visible en el modal #modExpeOfer")
+                }
+
+                js3.executeScript("arguments[0].scrollIntoView({block:'center'});", btnGuardar)
+                js3.executeScript("arguments[0].click();", btnGuardar)
+               
+                    correctos.add(fila[0]?.toString())
+                    correctos.add(fila[2]?.toString())
+               
+                }    
+          
+                println("corectos " + correctos)
+                return correctos
+                      
+            }
+
+        } catch (Exception e ) {
+            println "Ocurrió un error en Selenium: ${e.message}"
+            e.printStackTrace()
+            throw e
+        } finally {
+            if (driver != null) {
+                driver.quit()
+                println "=== Terminado correctamente ==="
             }
         }
     }
