@@ -21,7 +21,7 @@ class SeleniumController {
 
     //SECCION DE PRUEBAS
     def iniciar() {
-        println "=== Petición web recibida: Iniciando Selenium ==="
+        println "=== Petición iniciar prueba compromiso ==="
 
         String numeroOferta = params.id
 
@@ -79,8 +79,6 @@ class SeleniumController {
         }
     }
 
-
-
     //SECCION DE CARGADO DE DATOS CON EXCEL
     def upload() {
     }
@@ -96,7 +94,7 @@ class SeleniumController {
         // 1. Validar que el archivo llegó y no está vacío
         if (!f || f.empty) {
             flash.error = "Debes seleccionar un archivo Excel."
-            redirect(action: "index")
+            redirect(action: "upload")
             return
         } else {
             println "archivo con contenido"
@@ -125,7 +123,7 @@ class SeleniumController {
         // 3. Validar extensión
         if (ext != "xlsx") {
             flash.error = "El archivo debe tener extensión .xlsx (recibido: .${ext})."
-            redirect(action: "index")
+            redirect(action: "upload")
             return
         }
         println "archivo xlsx"
@@ -206,28 +204,19 @@ class SeleniumController {
                         }        
                     }
 
-                    // 👇 Aquí usarías los datos para la automatización
                     println "reg1: $rgst"
-                    // if(rgst[0] != 'Nombre del archivo' && rgst[0] && rgst[1]) {
-                    //     println "procesa --> oferta: ${params.ofrt}, $rgst"
-                    seleniumService.cargaAnexos(params.ofrt?.toInteger(), rgst)
-                    // }
+                   def listaOriginal =  seleniumService.cargaAnexos(params.ofrt?.toInteger(), rgst)
+                    flash.correctos = listaOriginal ? listaOriginal.collate(1) : []
+                    workbook.close()
+                    excelFile.close()
+                    redirect(action: "archivoSubido", params: [seccion: " cargado de anexos EXCEL"])
                 }
             }
-
-            workbook.close()
-            excelFile.close()
-
-            flash.message = "Archivo '${nombreFinal}' subido y procesado correctamente."
         } catch (Exception e) {
-            log.error("Error procesando el Excel", e)
-            flash.error = "Error al procesar el Excel: ${e.message}"
+          redirect(action: "error", params: [mensajeError: e.message, seccion: " cargado de anexos EXCEL"])
         }
 
-        // redirect(action: "archivoSubido")
-        redirect(action: "upload")
     }
-
     def procesaExcelParticipacion() {
         println "params participacion: $params"
         def f = request.getFile('archivoParticipacion') 
@@ -708,4 +697,7 @@ class SeleniumController {
      return [error: params.mensajeError, seccion: params.seccion]    
     }
 
+    def columnas_ajax(){
+        
+    }
 }

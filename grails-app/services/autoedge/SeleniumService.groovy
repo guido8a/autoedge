@@ -59,7 +59,6 @@ class SeleniumService {
         println "=== Iniciando automatización compromiso participacion PRUEBA ==="
 
         WebDriver driver = crearDriver()
-        def correcto = []
 
         try {
 
@@ -248,9 +247,6 @@ class SeleniumService {
                 JavascriptExecutor js3 = (JavascriptExecutor) driver
                 js3.executeScript("arguments.focus();", botonGuardar)
                 js3.executeScript("arguments.click();", botonGuardar)
-
-                correcto.add("1716472225")
-                correcto.add("1716472225")
 
             }
 

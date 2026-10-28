@@ -21,7 +21,8 @@
 
 <body>
 
-    <h2><i class="fa fa-file-excel text-success"></i> Carga de datos al MFC mediante un archivo Excel</h2>
+    <h2><i class="fa fa-file-excel text-success"></i> Carga de datos al MFC mediante un archivo Excel (datos reales)
+    </h2>
 
     <div class="container-lg py-4 alert alert-success">
         <div class="row justify-content-center">
@@ -49,8 +50,10 @@
                         Procesar Archivo
                     </a>
                 </div>
+
             </div>
         </g:uploadForm>
+
     </div>
 
     <div class="container-lg py-4 alert alert-success">
@@ -148,11 +151,47 @@
         </g:uploadForm>
     </div>
 
-    <div class="col-md-2" style="margin-top: 20px;">
-        <a href="#" class="btn btn-success" id="btnRegresar"><i class="fa fa-arrow-left"></i> Regresar</a>
+    <div class="col-md-12 btn-group">
+        <div class="col-md-2" style="margin-top: 20px;">
+            <a href="#" class="btn btn-success" id="btnRegresar"><i class="fa fa-arrow-left"></i> Regresar</a>
+        </div>
+        <div class="col-md-2" style="margin-top: 20px;">
+            <a href="#" class="btn btn-warning" id="btnVerFormatoParticipacion"><i class="fa fa-list"></i>
+                Formato excel
+            </a>
+        </div>
     </div>
 
     <script type="text/javascript">
+
+        $("#btnVerFormatoParticipacion").click(function () {
+            cargarFormato()
+        });
+
+        function cargarFormato() {
+            $.ajax({
+                type: "POST",
+                url: "${createLink(action:'columnas_ajax')}",
+                data: {},
+                success: function (msg) {
+                    var b = bootbox.dialog({
+                        id: "dlgCreateEdit",
+                        title: "<i class='fa fa-file-excel'></i>  Formato Excel para el archivo ha ser cargado",
+                        className: 'modal-xl',
+                        message: msg,
+                        buttons: {
+                            cancelar: {
+                                label: "<i class='fa fa-times'></i>  Cancelar",
+                                className: "btn-primary",
+                                callback: function () {
+                                }
+                            }
+                        } //buttons
+                    }); //dialog
+                } //success
+            }); //ajax
+        }
+
         var configValidacion = {
             errorClass: 'is-invalid',
             validClass: 'is-valid',
