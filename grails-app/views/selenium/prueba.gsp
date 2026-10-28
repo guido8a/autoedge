@@ -8,8 +8,8 @@
 
 <div class="container">
 <div class="row" style="font-size: 20px;">
-<div class="col-md-12" style="text-align: center;">
-<i class="fa fa-vial"></i>Prueba de ingreso de datos al MFC
+<div class="col-md-12" style="text-align: left;">
+<h2><i class="fa fa-vial"></i>Prueba de ingreso de datos al MFC</h2>
 </div>
 </div>
 </div>

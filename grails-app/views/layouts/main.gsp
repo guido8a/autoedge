@@ -25,10 +25,11 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm" >
-    <div class="container-lg">
-        <a class="navbar-brand d-flex align-items-center" style="align-items: center;" href="${request.contextPath}/">
-            <i class="fa fa-wand-magic-sparkles text-info fa-2x"></i> MFC automatizado
+<nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
+    <div class="container-fluid d-flex justify-content-center">
+        <a class="navbar-brand d-flex align-items-center justify-content-center text-center gap-2" href="#">
+            <i class="fa fa-robot text-info fa-2x"></i> 
+            <span>MFC (Módulo Facilitador de Contratación Pública) automatizado</span>
         </a>
     </div>
 </nav>

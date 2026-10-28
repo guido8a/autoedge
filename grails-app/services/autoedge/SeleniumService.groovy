@@ -54,14 +54,14 @@ class SeleniumService {
         }
     }
 
-   /* desde agenteMfc */
+  //***********************SECCIÓN DE CARGA DE PRUEBA ************************
    void ejecutarAutomatizacion(int oferta) {
-        println "=== Iniciando automatización compromiso participacion con Edge ==="
+        println "=== Iniciando automatización compromiso participacion PRUEBA ==="
 
         WebDriver driver = crearDriver()
+        def correcto = []
 
         try {
-            // 3. Inicializar el navegador
 
             WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
             WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
@@ -119,7 +119,7 @@ class SeleniumService {
                         ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_numeroDocumentoCp"))
                 )
                 campoNumeroDocumento.clear()
-                campoNumeroDocumento.sendKeys("1716473325")
+                campoNumeroDocumento.sendKeys("1716472225")
 
                 //nombre completo
 
@@ -248,6 +248,9 @@ class SeleniumService {
                 JavascriptExecutor js3 = (JavascriptExecutor) driver
                 js3.executeScript("arguments.focus();", botonGuardar)
                 js3.executeScript("arguments.click();", botonGuardar)
+
+                correcto.add("1716472225")
+                correcto.add("1716472225")
 
             }
 
@@ -681,7 +684,7 @@ class SeleniumService {
         }
     }
   
-    //CARGA DE EXCEL 
+    //***********************SECCIÓN DE CARGA CON EXCEL ************************
     // compromiso participacion
     def ejecutarCargaCompromiso(int oferta, List rgst) {
         println "=== Iniciando automatización compromiso participacion con excel ==="

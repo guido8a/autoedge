@@ -3,7 +3,7 @@
 
 <head>
     <meta name="layout" content="main" />
-    <title>ERROR - Selenium Edge</title>
+    <title>ERROR en la automatización</title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
                     class="fa fa-triangle-exclamation fa-2x"></i> Error en la automatización de ${seccion}</div>
         </div>
         <div class="row alert alert-warning" style="margin-top: 5px;">
-            <div class="col-md-12" style="font-size: 18px;"> <i class="fa fa-times"></i> ERROR: ${error}</div>
+            <div class="col-md-12" style="font-size: 18px;"> <i class="fa fa-circle-xmark text-danger fa-2x"></i> ERROR: ${error}</div>
         </div>
     </div>
 

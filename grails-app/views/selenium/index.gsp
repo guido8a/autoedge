@@ -41,7 +41,7 @@
 </head>
 <body>
 
-<div class="container-lg" style="margin-top: 50px;">
+<div class="container-lg" style="margin-top: 10px;">
     <div class="row g-4 justify-content-center">        
         <div class="col-12 col-md-5">
             <a class="card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
@@ -69,7 +69,6 @@
                 </div>
             </a>
         </div>
-
     </div>
 </div>
 
@@ -79,6 +78,11 @@ function cargar() {
     cargarLoader("Cargando...")
 }
 
+window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+        window.location.reload();
+    }
+});
 </script>
 
 </body>

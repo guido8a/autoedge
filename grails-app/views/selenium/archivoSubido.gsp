@@ -3,7 +3,7 @@
 
 <head>
     <meta name="layout" content="main" />
-    <title>CARGADO CORRECTAMENTE - Selenium Edge</title>
+    <title>CARGADO CORRECTAMENTE</title>
 </head>
 
 <body>

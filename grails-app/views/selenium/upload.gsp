@@ -21,7 +21,7 @@
 
 <body>
 
-    <h2><i class="fa fa-file-excel text-success"></i> Carga de datos mediante un archivo Excel</h2>
+    <h2><i class="fa fa-file-excel text-success"></i> Carga de datos al MFC mediante un archivo Excel</h2>
 
     <div class="container-lg py-4 alert alert-success">
         <div class="row justify-content-center">
