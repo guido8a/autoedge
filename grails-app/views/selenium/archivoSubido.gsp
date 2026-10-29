@@ -3,7 +3,7 @@
 
 <head>
     <meta name="layout" content="main" />
-    <title>CARGADO CORRECTAMENTE</title>
+    <title>Proceso realizado correctamente</title>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
             <div class="col-md-12" style="font-size: 18px;"> <i class="fa fa-times"></i> ERRORES: ${error}</div>
     </div> --%>
     <div class="row alert alert-success" style="margin-top: 5px;">
-        <g:if test="${seccion == ' experiencia laboral EXCEL'}">
+        <g:if test="${seccion?.toLowerCase()?.contains('experiencia laboral')}">
             <div class="col-md-12" style="font-size: 18px;"> <i class="fa fa-check fa-2x texty-info"></i> Experiencia
                 laboral cargada correctamente: </div>
             <ul>
@@ -30,7 +30,7 @@
             </ul>
         </g:if>
         <g:else>
-            <g:if test="${seccion == ' experiencia oferente EXCEL'}">
+            <g:if test="${seccion?.toLowerCase()?.contains('experiencia oferente')}">
                 <div class="col-md-12" style="font-size: 18px;"> <i class="fa fa-check fa-2x texty-info"></i>
                     Experiencia del oferente cargada correctamente: </div>
                 <ul>

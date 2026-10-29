@@ -21,46 +21,62 @@ class SeleniumController {
 
     //SECCION DE PRUEBAS
     def iniciar() {
-        println "=== Petición iniciar prueba compromiso ==="
+        println "=== Petición iniciar cargaCompromiso ==="
 
         String numeroOferta = params.id
 
         try {
-          seleniumService.ejecutarAutomatizacion(Integer.parseInt(numeroOferta))
+        //   seleniumService.ejecutarAutomatizacion(Integer.parseInt(numeroOferta))
 
-            flash.error = "Automatización correcta de ingreso de compromiso de participación en la oferta ${numeroOferta}"
-            redirect(action: "prueba")
+            // flash.error = "Automatización correcta de ingreso de compromiso de participación en la oferta ${numeroOferta}"
+            // redirect(action: "prueba")
+
+                    def listaOriginal =  seleniumService.ejecutarAutomatizacion(Integer.parseInt(numeroOferta))
+                    flash.correctos = listaOriginal ? listaOriginal.collate(2) : []
+                    redirect(action: "archivoSubido", params: [seccion: " cargado de compromiso"])
+
+
         } catch (Exception e) {
-              redirect(action: "error", params: [mensajeError: e.message, seccion: "carga de anexos"])
+              redirect(action: "error", params: [mensajeError: e.message, seccion: "carga de compromiso"])
         }
     }
 
     def iniciarCargaExperienciaLaboral() {
-        println "=== Petición iniciarCargaExperienciaLaboral ==="
+        println "=== Petición iniciar cargaExperienciaLaboral ==="
 
         String numeroOferta = params.id
         String numeroPersonal = params.personal
 
         try {
-            seleniumService.ejecutarAutomatizacionExperienciaLaboral(Integer.parseInt(numeroOferta), Integer.parseInt(numeroPersonal))
-              flash.error = "Automatización correcta de ingreso de experiencia laboral en la oferta ${numeroOferta}"
-            redirect(action: "prueba")
+            // seleniumService.ejecutarAutomatizacionExperienciaLaboral(Integer.parseInt(numeroOferta), Integer.parseInt(numeroPersonal))
+            //   flash.error = "Automatización correcta de ingreso de experiencia laboral en la oferta ${numeroOferta}"
+            // redirect(action: "prueba")
+
+                def listaOriginal =  seleniumService.ejecutarAutomatizacionExperienciaLaboral(Integer.parseInt(numeroOferta), Integer.parseInt(numeroPersonal))
+                    flash.correctos = listaOriginal ? listaOriginal.collate(2) : []
+                    redirect(action: "archivoSubido", params: [seccion: " experiencia laboral"])
+
         } catch (Exception e) {
              redirect(action: "error", params: [mensajeError: e.message, seccion: "experiencia laboral"])
         }
     }
 
     def iniciarCargaAnexos() {
-        println "=== Petición iniciarCargaAnexos ==="
+        println "=== Petición iniciar cargaAnexos ==="
 
         String numeroOferta = params.id
 
         try {
-            seleniumService.ejecutarAutomatizacionCargaAnexos(Integer.parseInt(numeroOferta))
-            flash.error = "Automatización correcta de carga de anexos en la oferta ${numeroOferta}"
-            redirect(action: "prueba")
+            // seleniumService.ejecutarAutomatizacionCargaAnexos(Integer.parseInt(numeroOferta))
+            // flash.error = "Automatización correcta de carga de anexos en la oferta ${numeroOferta}"
+            // redirect(action: "prueba")
+
+                    def listaOriginal =  seleniumService.ejecutarAutomatizacionCargaAnexos(Integer.parseInt(numeroOferta))
+                    flash.correctos = listaOriginal ? listaOriginal.collate(2) : []
+                    redirect(action: "archivoSubido", params: [seccion: " carga de anexo"])
+
         } catch (Exception e) {
-             redirect(action: "error", params: [mensajeError: e.message, seccion: "carga de anexos"])
+             redirect(action: "error", params: [mensajeError: e.message, seccion: "carga de anexo"])
         }
     }
 
@@ -70,10 +86,15 @@ class SeleniumController {
         String numeroOferta = params.id
 
         try {
-            seleniumService.ejecutarAutomatizacionCargaExperienciaOferente(Integer.parseInt(numeroOferta))
+            // seleniumService.ejecutarAutomatizacionCargaExperienciaOferente(Integer.parseInt(numeroOferta))
 
-            flash.error = "Automatización correcta de ingreso de experiencia del oferente en la oferta ${numeroOferta}"
-            redirect(action: "prueba")
+            // flash.error = "Automatización correcta de ingreso de experiencia del oferente en la oferta ${numeroOferta}"
+            // redirect(action: "prueba")
+
+               def listaOriginal =  seleniumService.ejecutarAutomatizacionCargaExperienciaOferente(Integer.parseInt(numeroOferta))
+                    flash.correctos = listaOriginal ? listaOriginal.collate(2) : []
+                    redirect(action: "archivoSubido", params: [seccion: " experiencia del oferente"])
+
         } catch (Exception e) {
              redirect(action: "error", params: [mensajeError: e.message, seccion: "experiencia del oferente"])
         }

@@ -55,10 +55,12 @@ class SeleniumService {
     }
 
   //***********************SECCIÓN DE CARGA DE PRUEBA ************************
+  //COMPROMISO
    void ejecutarAutomatizacion(int oferta) {
-        println "=== Iniciando automatización compromiso participacion PRUEBA ==="
+        println "=== Iniciando carga compromiso participacion PRUEBA ==="
 
         WebDriver driver = crearDriver()
+        def correctos = []
 
         try {
 
@@ -118,7 +120,7 @@ class SeleniumService {
                         ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_numeroDocumentoCp"))
                 )
                 campoNumeroDocumento.clear()
-                campoNumeroDocumento.sendKeys("1716472225")
+                campoNumeroDocumento.sendKeys("1716472235")
 
                 //nombre completo
 
@@ -248,26 +250,31 @@ class SeleniumService {
                 js3.executeScript("arguments.focus();", botonGuardar)
                 js3.executeScript("arguments.click();", botonGuardar)
 
+                correctos.add("1716472235")
+                correctos.add("Pedro Perez")
+
             }
 
+            return correctos
+
         } catch (Exception e ) {
-           println "Ocurrió un error en Selenium: ${e.message}"
+           println "Ocurrió un error en carga compromiso PRUEBA : ${e.message}"
            e.printStackTrace()
            throw e
         } finally {
-            // 5. Asegurar el cierre del proceso de Firefox
             if (driver != null) {
                 driver.quit()
-                println "=== Terminado correctamente ==="
+                println "=== Terminado carga compromiso PRUEBA correctamente ==="
             }
         }
     }
 
+    //EXPERIENCIA LABORAL
     void ejecutarAutomatizacionExperienciaLaboral(int oferta, int personal) {
-        println "=== Iniciando ExperienciaLaboral ==="
+        println "=== Iniciando carga ExperienciaLaboral PRUEBA ==="
 
-        // WebDriver driver = new EdgeDriver()
         WebDriver driver = crearDriver()
+        def correctos = []
 
         try {
 
@@ -394,24 +401,30 @@ class SeleniumService {
                 def guardarPersonal = wait.until(
                         ExpectedConditions.elementToBeClickable(By.id("guardarExperienciaProfesional")) )
                 guardarPersonal.click()
+
+                correctos.add("${personal}")
+                correctos.add("Tedein")
+
             }
 
+            return correctos
+
         } catch (Exception e ) {
-            println "Ocurrió un error en Selenium: ${e.message}"
+            println "Ocurrió un error carga experiencia laboral PRUEBA : ${e.message}"
             e.printStackTrace()
             throw e
         } finally {
             if (driver != null) {
                 driver.quit()
-                println "=== Terminado correctamente ==="
+                println "=== Terminado carga de experiencia laboral PRUEBA correctamente ==="
             }
         }
     }
 
     void ejecutarAutomatizacionCargaAnexos(int oferta) {
-        println "=== Iniciando automatización carga anexos con Edge ==="
+        println "=== Iniciando automatización carga anexos PRUEBA ==="
 
-        // WebDriver driver = new EdgeDriver()
+        def correctos = []
         WebDriver driver = crearDriver()
 
         try {
@@ -481,24 +494,29 @@ class SeleniumService {
                         ExpectedConditions.elementToBeClickable(By.id("submit")) )
                 guardarAnexo.click()
 
+                correctos.add("anexo")
+                correctos.add("Anexo numero uno")
+
             }
 
+            return correctos
+
         } catch (Exception e ) {
-            println "Ocurrió un error en Selenium: ${e.message}"
+            println "Ocurrió un error en carga de anexo PRUEBA: ${e.message}"
             e.printStackTrace()
              throw e
         } finally {
             if (driver != null) {
                 driver.quit()
-                println "=== Terminado carga de anexo correctamente ==="
+                println "=== Terminado carga de anexo PRUEBA correctamente ==="
             }
         }
     }
 
    void ejecutarAutomatizacionCargaExperienciaOferente(int oferta) {
-        println "=== Iniciando automatización carga experiencia oferente con Edge ==="
+        println "=== Iniciando automatización carga experiencia oferente PRUEBA ==="
 
-        // WebDriver driver = new EdgeDriver()
+        def correctos = []
         WebDriver driver = crearDriver()
 
         try {
@@ -639,7 +657,6 @@ class SeleniumService {
                 js3.executeScript("arguments[0].scrollIntoView({block:'center'});", labelAnexo)
                 js3.executeScript("arguments[0].click();", labelAnexo)
 
-
                 //valor del contrato
 
                 def campoValor= wait.until(
@@ -650,7 +667,6 @@ class SeleniumService {
                 campoValor.sendKeys("100000")
 
                 //boton guardar
-
 
                 def botonesGuardar = js3.findElements(
                     By.xpath("//div[@id='modExpeOfer']" +
@@ -666,24 +682,29 @@ class SeleniumService {
 
                 js3.executeScript("arguments[0].scrollIntoView({block:'center'});", btnGuardar)
                 js3.executeScript("arguments[0].click();", btnGuardar)
+
+                    correctos.add("1")
+                    correctos.add("Empresa XX")
             }
 
+            return correctos
+
         } catch (Exception e ) {
-            println "Ocurrió un error en Selenium: ${e.message}"
+            println "Ocurrió un error carga de experiencia de oferente PRUEBA: ${e.message}"
             e.printStackTrace()
              throw e
         } finally {
             if (driver != null) {
                 driver.quit()
-                println "=== Terminado correctamente ==="
+                println "=== Terminado carga de experiencia de oferente PRUEBA correctamente ==="
             }
         }
     }
   
     //***********************SECCIÓN DE CARGA CON EXCEL ************************
-    // compromiso participacion
+    // COMPROMISO
     def ejecutarCargaCompromiso(int oferta, List rgst) {
-        println "=== Iniciando automatización compromiso participacion con excel ==="
+        println "=== Iniciando automatización compromiso participacion con EXCEL ==="
         def correctos = []
         WebDriver driver = crearDriver()
     
@@ -924,6 +945,7 @@ class SeleniumService {
         }
     }
 
+    //EXPERIENCIA LABORAL
     def ejecutarCargaExperienciaLaboral(int oferta, List rgst) {
         println "=== Iniciando carga excel ExperienciaLaboral ==="
         def correctos = []
