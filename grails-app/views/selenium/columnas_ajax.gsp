@@ -1,7 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-
-        <div class="alert alert-info">
+        <div class="alert alert-warning py-2">
             <strong> Lineamientos generales para la creación del archivo excel: </strong>
             <ul>
                 <li>
@@ -16,10 +15,10 @@
             </ul>
         </div>
 
-        <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
+        <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-warning"
             style="margin-top: 10px;">
-            <h4>Hoja n°1: <strong class="text-info"> Anexos </strong></h4>
-            <div class="alert alert-info">
+            <h4>Hoja n°1: <strong class="text-success"> Anexos </strong></h4>
+            <div class="alert alert-warning py-1">
                 <ul>
                     <li>
                         Los archivos deben ser de formato .PDF
@@ -33,8 +32,12 @@
                 </ul>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered border-warning-subtle text-nowrap" style="font-size: 11px;">
-                    <thead class="table-warning text-warning-emphasis">
+                <table class="table table-bordered border-success-subtle text-nowrap" style="font-size: 11px;">
+                    <thead class="table-success text-warning-emphasis">
+                          <tr style="text-align: center; font-size: 14px;">
+                            <th>A</th>
+                            <th>B</th>
+                        </tr>
                         <tr>
                             <th>Nombre del archivo</th>
                             <th>Descripción del archivo máx 50ca</th>
@@ -51,10 +54,19 @@
         </div>
         <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
             style="margin-top: 10px;">
-            <h4>Hoja n°2: <strong class="text-info"> Experiencia oferente </strong></h4>
+            <h4>Hoja n°2: <strong class="text-success"> Experiencia oferente </strong></h4>
             <div class="table-responsive">
-                <table class="table table-bordered border-warning-subtle text-nowrap" style="font-size: 11px;">
-                    <thead class="table-warning text-warning-emphasis">
+                <table class="table table-bordered border-success-subtle text-nowrap" style="font-size: 11px;">
+                    <thead class="table-success text-warning-emphasis">
+                          <tr style="text-align: center; font-size: 14px;">
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>E</th>
+                            <th>F</th>
+                            <th>G</th>
+                        </tr>
                         <tr>
                             <th>No.</th>
                             <th>Tipo</th>
@@ -81,8 +93,8 @@
         </div>
         <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
             style="margin-top: 10px;">
-            <h4>Hoja n°3: <strong class="text-info"> Compromiso participación </strong></h4>
-                        <div class="alert alert-info">
+            <h4>Hoja n°3: <strong class="text-success"> Compromiso participación </strong></h4>
+                        <div class="alert alert-warning py-1">
                 <ul>
                     <li>
                         La columna "Título 4to nivel" es la única que puede quedar vacía de ser necesario
@@ -90,8 +102,25 @@
                 </ul>
             </div>
             <div class="table-responsive">
-                <table class="table table-bordered border-warning-subtle text-nowrap" style="font-size: 11px;">
-                    <thead class="table-warning text-warning-emphasis">
+                <table class="table table-bordered border-success-subtle text-nowrap" style="font-size: 11px;">
+                    <thead class="table-success text-warning-emphasis">
+                            <tr style="text-align: center; font-size: 14px;">
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>E</th>
+                            <th>F</th>
+                            <th>G</th>
+                            <th>H</th>
+                            <th>I</th>
+                            <th>J</th>
+                            <th>K</th>
+                            <th>L</th>
+                            <th>M</th>
+                            <th>N</th>
+                            <th>O</th>
+                        </tr>
                         <tr>
                             <th>Persona No.</th>
                             <th>Tipo de documento</th>
@@ -134,10 +163,21 @@
         </div>
         <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
             style="margin-top: 10px;">
-            <h4>Hoja n°4: <strong class="text-info"> Experiencia Laboral </strong></h4>
+            <h4>Hoja n°4: <strong class="text-success"> Experiencia Laboral </strong></h4>
             <div class="table-responsive">
-                <table class="table table-bordered border-warning-subtle text-nowrap" style="font-size: 11px;">
-                    <thead class="table-warning text-warning-emphasis">
+                <table class="table table-bordered border-success-subtle text-nowrap" style="font-size: 11px;">
+                    <thead class="table-success text-warning-emphasis">
+                       <tr style="text-align: center; font-size: 14px;">
+                            <th>A</th>
+                            <th>B</th>
+                            <th>C</th>
+                            <th>D</th>
+                            <th>E</th>
+                            <th>F</th>
+                            <th>G</th>
+                            <th>H</th>
+                            <th>I</th>
+                        </tr>
                         <tr>
                             <th>Persona No.</th>
                             <th>Empresa</th>

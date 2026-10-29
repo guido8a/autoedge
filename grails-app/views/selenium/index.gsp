@@ -64,7 +64,7 @@
                         <h6 class="card-title mb-0 fw-semibold"><i class="fa fa-file-excel"></i>Cargado con excel (Datos reales)</h6>
                     </div>
                     <p class="card-text text-body-secondary mb-0">
-                        Cargado de datos a los diferentes módulos del MFC mediante un archivo excel personalizado por el usuario.
+                        Cargado de datos reales a los diferentes módulos del MFC mediante un archivo excel personalizado por el usuario.
                     </p>
                 </div>
             </a>

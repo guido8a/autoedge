@@ -24,7 +24,7 @@
     <h2><i class="fa fa-file-excel text-success"></i> Carga de datos al MFC mediante un archivo Excel (datos reales)
     </h2>
 
-    <div class="container-lg py-4 alert alert-success">
+    <div class="container-lg py-3 alert alert-success">
         <div class="row justify-content-center">
             <div class="col-5 col-md-4" style="font-size: 18px;">
                 <i class="fa fa-file-pdf"></i> Cargar compromiso de participación
@@ -56,7 +56,7 @@
 
     </div>
 
-    <div class="container-lg py-4 alert alert-success">
+    <div class="container-lg py-3 alert alert-success">
         <div class="row justify-content-center">
             <div class="col-5 col-md-4" style="font-size: 18px;">
                 <i class="fa fa-file-pdf"></i> Cargar experiencia laboral
@@ -86,7 +86,7 @@
         </g:uploadForm>
     </div>
 
-    <div class="container-lg py-4 alert alert-success">
+    <div class="container-lg py-3 alert alert-success">
 
         <div class="row justify-content-center">
             <div class="col-5 col-md-4" style="font-size: 18px;">
@@ -94,8 +94,8 @@
             </div>
         </div>
 
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <i class="fa fa-exclamation-triangle fa-2x"></i>
+        <div class="alert alert-warning alert-dismissible fade show col-md-9" role="alert" style="font-size: 13px !important">
+           <i class="fa fa-exclamation-triangle text-warning fa-2x"></i>
             Los archivos de anexos deben estar colocados en el disco "C" y en la carpeta
             <strong>C:\agente\anexos</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
@@ -122,7 +122,7 @@
         </g:uploadForm>
     </div>
 
-    <div class="container-lg py-4 alert alert-success">
+    <div class="container-lg py-3 alert alert-success">
         <div class="row justify-content-center">
             <div class="col-5 col-md-4" style="font-size: 18px;">
                 <i class="fa fa-file-pdf"></i> Cargar experiencia del oferente
