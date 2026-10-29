@@ -56,7 +56,7 @@ class SeleniumService {
 
   //***********************SECCIÓN DE CARGA DE PRUEBA ************************
   //COMPROMISO
-   void ejecutarAutomatizacion(int oferta) {
+   def ejecutarAutomatizacion(int oferta) {
         println "=== Iniciando carga compromiso participacion PRUEBA ==="
 
         WebDriver driver = crearDriver()
@@ -270,7 +270,7 @@ class SeleniumService {
     }
 
     //EXPERIENCIA LABORAL
-    void ejecutarAutomatizacionExperienciaLaboral(int oferta, int personal) {
+    def ejecutarAutomatizacionExperienciaLaboral(int oferta, int personal) {
         println "=== Iniciando carga ExperienciaLaboral PRUEBA ==="
 
         WebDriver driver = crearDriver()
@@ -421,7 +421,7 @@ class SeleniumService {
         }
     }
 
-    void ejecutarAutomatizacionCargaAnexos(int oferta) {
+    def ejecutarAutomatizacionCargaAnexos(int oferta) {
         println "=== Iniciando automatización carga anexos PRUEBA ==="
 
         def correctos = []
@@ -513,7 +513,7 @@ class SeleniumService {
         }
     }
 
-   void ejecutarAutomatizacionCargaExperienciaOferente(int oferta) {
+   def ejecutarAutomatizacionCargaExperienciaOferente(int oferta) {
         println "=== Iniciando automatización carga experiencia oferente PRUEBA ==="
 
         def correctos = []
@@ -1145,7 +1145,7 @@ class SeleniumService {
         }
     } 
 
-     void cargaAnexos(int oferta, List rgst) {
+     def cargaAnexos(int oferta, List rgst) {
         println "=== Inicia carga anexos con excel ==="
         WebDriver driver = crearDriver()
 
