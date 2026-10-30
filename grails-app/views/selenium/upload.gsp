@@ -20,10 +20,12 @@
 <body>
     <div class="container-lg py-1">
         <div class="row justify-content-center">
-            <div class="col-lg-7">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-9">
                 <h4>
-                    <i class="fa fa-file-excel text-success"></i> Cargar datos al MFC desde un archivo Excel (datos
-                    reales)
+                    <i class="fa fa-file-excel text-success"></i> 
+                    Cargar datos al MFC desde un archivo Excel (datos reales)
                 </h4>
             </div>
         </div>
