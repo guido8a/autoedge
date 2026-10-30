@@ -120,7 +120,7 @@ class SeleniumService {
                         ExpectedConditions.visibilityOfElementLocated(By.id("comproPartici_numeroDocumentoCp"))
                 )
                 campoNumeroDocumento.clear()
-                campoNumeroDocumento.sendKeys("1716472235")
+                campoNumeroDocumento.sendKeys("1716473325")
 
                 //nombre completo
 
@@ -250,7 +250,7 @@ class SeleniumService {
                 js3.executeScript("arguments.focus();", botonGuardar)
                 js3.executeScript("arguments.click();", botonGuardar)
 
-                correctos.add("1716472235")
+                correctos.add("1716473325")
                 correctos.add("Pedro Perez")
 
             }
@@ -1126,7 +1126,7 @@ class SeleniumService {
       
                     guardarPersonal.click();
     
-                    correctos.add(fila[1]?.toString())
+                    correctos.add(fila[0]?.toString())
                     correctos.add(fila[2]?.toString())
                 }
 
