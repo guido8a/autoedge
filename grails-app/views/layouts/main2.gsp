@@ -24,28 +24,26 @@
     <g:layoutHead/>
 </head>
 
-<body>
+<body style="background-color:#dadada">
 
 <nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
     <div class="container-fluid d-flex justify-content-center">
         <a class="navbar-brand d-flex align-items-center justify-content-center text-center gap-2" href="#">
-            <i class="fa fa-robot text-info fa-2x"></i> 
-            <span>MFC (Módulo Facilitador de Contratación Pública) automatizado</span>
+            <%-- <i class="fa fa-robot text-info fa-2x"></i>  --%>
+            <i class="fa-solid fa-pen-to-square fa-3x"></i>
+            <span style="font-size:2em">Automatización para el MFC (Módulo Facilitador de la Contratación Pública)</span>
         </a>
     </div>
 </nav>
 
-<div class="bg-body-tertiary">
+<%-- <div class="bg-primary-subtle" style="background-color:#dadada"> --%>
+<div style="background-color:#dadada">
     <div class="container-lg py-4">
         <g:layoutBody/>
     </div>
 </div>
 
-<div class="container-fluid d-flex justify-content-center mb-3">
-    <div class="overflow-hidden" style="max-width: 250px; max-height: 150px;">
-        <asset:image src="sercop.jpeg" class="img-fluid w-100 h-100" style="object-fit: contain;" alt="Principal"/>
-    </div>
-</div>
+
 
 
 <div id="spinner" class="position-absolute top-0 end-0 p-1" style="display:none;">

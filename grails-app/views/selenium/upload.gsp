@@ -6,7 +6,7 @@
     <title>Subir Excel</title>
 
     <style type="text/css">
-        .alert-success .invalid-feedback.posicionado {
+        .alert-secondary .invalid-feedback.posicionado {
             color: #dc3545 !important;
             font-size: 15px;
             font-weight: bold;
@@ -21,10 +21,10 @@
 
 <body>
 
-    <h2><i class="fa fa-file-excel text-success"></i> Carga de datos al MFC mediante un archivo Excel (datos reales)
+    <h2><i class="fa fa-file-excel text-success"></i> Cargar datos al MFC desde un archivo Excel (datos reales)
     </h2>
 
-    <div class="container-lg py-3 alert alert-success">
+    <div class="container-lg py-3 alert alert-secondary">
         <div class="row justify-content-center">
             <div class="col-5 col-md-4" style="font-size: 18px;">
                 <i class="fa fa-file-pdf"></i> Cargar compromiso de participación
@@ -39,13 +39,13 @@
                     <input type="text" name="ofrtParticipacion" id="ofrtParticipacion" class="form-control required"
                         min="1" value="${1}" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <label for="file" class="form-label">Archivo Excel con los datos a subir:</label>
                     <input type="file" name="archivoParticipacion" id="archivoParticipacion" accept=".xlsx"
                         class="form-control required" />
 
                 </div>
-                <div class="col-md-3" style="margin-top: 47px;">
+                <div class="col-md-2" style="margin-top: 47px;">
                     <a href="#" class="btn btn-success" id="btnSubmitParticipacion"><i class="fa fa-upload"></i>
                         Procesar Archivo
                     </a>
@@ -56,7 +56,7 @@
 
     </div>
 
-    <div class="container-lg py-3 alert alert-success">
+    <div class="container-lg py-3 alert alert-secondary">
         <div class="row justify-content-center">
             <div class="col-5 col-md-4" style="font-size: 18px;">
                 <i class="fa fa-file-pdf"></i> Cargar experiencia laboral
@@ -71,13 +71,13 @@
                     <input type="text" name="ofrtExperiencia" id="ofrtExperiencia" class="form-control required" min="1"
                         value="${1}" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <label for="file" class="form-label">Archivo Excel con los datos a subir:</label>
                     <input type="file" name="archivoExperiencia" id="archivoExperiencia" accept=".xlsx"
                         class="form-control required" />
 
                 </div>
-                <div class="col-md-3" style="margin-top: 47px;">
+                <div class="col-md-2" style="margin-top: 47px;">
                     <a href="#" class="btn btn-success" id="btnSubmitExperiencia"><i class="fa fa-upload"></i> Procesar
                         Archivo
                     </a>
@@ -86,21 +86,21 @@
         </g:uploadForm>
     </div>
 
-    <div class="container-lg py-3 alert alert-success">
+    <div class="container-lg py-3 alert alert-secondary">
 
         <div class="row justify-content-center">
-            <div class="col-5 col-md-4" style="font-size: 18px;">
-                <i class="fa fa-file-pdf"></i> Cargar Anexos
+            <div class="col-2 col-md-8" style="font-size: 18px; height:35px">
+                <i class="fa fa-file-pdf"></i> Cargar Anexos <strong style="margin-left:40px">Importante:</strong> los archidos deben estar colocados en <strong>C:\agente\anexos</strong>
             </div>
         </div>
 
-        <div class="alert alert-warning alert-dismissible fade show col-md-9" role="alert" style="font-size: 13px !important">
+        <%-- <div class="alert alert-warning alert-dismissible fade show col-md-9" role="alert" style="font-size: 13px !important">
            <i class="fa fa-exclamation-triangle text-warning fa-2x"></i>
             Los archivos de anexos deben estar colocados en el disco "C" y en la carpeta
             <strong>C:\agente\anexos</strong>
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
             </button>
-        </div>
+        </div> --%>
 
         <g:uploadForm action="procesaExcel" method="POST" name="frmUpload" enctype="multipart/form-data">
             <div class="row g-3">
@@ -108,12 +108,12 @@
                     <label for="ofrt" class="form-label">Oferta:</label>
                     <input type="text" name="ofrt" id="ofrt" class="form-control required" min="1" value="${1}" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <label for="file" class="form-label">Archivo Excel con los datos a subir:</label>
                     <input type="file" name="archivo" id="archivo" accept=".xlsx" class="form-control required" />
 
                 </div>
-                <div class="col-md-3" style="margin-top: 47px;">
+                <div class="col-md-2" style="margin-top: 47px;">
                     <a href="#" class="btn btn-success" id="btnSubmit"><i class="fa fa-upload"></i>
                         Procesar Archivo
                     </a>
@@ -122,7 +122,7 @@
         </g:uploadForm>
     </div>
 
-    <div class="container-lg py-3 alert alert-success">
+    <div class="container-lg py-3 alert alert-secondary">
         <div class="row justify-content-center">
             <div class="col-5 col-md-4" style="font-size: 18px;">
                 <i class="fa fa-file-pdf"></i> Cargar experiencia del oferente
@@ -137,13 +137,13 @@
                     <input type="text" name="ofrtExperienciaOferente" id="ofrtExperienciaOferente"
                         class="form-control required" min="1" value="${1}" />
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-9">
                     <label for="file" class="form-label">Archivo Excel con los datos a subir:</label>
                     <input type="file" name="archivoExperienciaOferente" id="archivoExperienciaOferente" accept=".xlsx"
                         class="form-control required" />
 
                 </div>
-                <div class="col-md-3" style="margin-top: 47px;">
+                <div class="col-md-2" style="margin-top: 47px;">
                     <a href="#" class="btn btn-success" id="btnSubmitExperienciaOferente"><i class="fa fa-upload"></i>
                         Procesar Archivo</a>
                 </div>
@@ -155,9 +155,9 @@
         <div class="col-md-2" style="margin-top: 20px;">
             <a href="#" class="btn btn-success" id="btnRegresar"><i class="fa fa-arrow-left"></i> Regresar</a>
         </div>
-        <div class="col-md-2" style="margin-top: 20px;">
-            <a href="#" class="btn btn-warning" id="btnVerFormatoParticipacion"><i class="fa fa-list"></i>
-                Formato excel
+        <div class="col-md-5" style="margin-top: 20px;">
+            <a href="#" class="btn btn-dark" id="btnVerFormatoParticipacion"><i class="fa fa-list"></i>
+                Estructura de los archivos Excel que copntienen los datos
             </a>
         </div>
     </div>
