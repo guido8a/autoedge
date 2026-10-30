@@ -42,6 +42,13 @@
 <body>
 
 <div class="container-lg" style="margin-top: 10px;">
+
+<div class="container-fluid d-flex justify-content-center mb-3">
+    <div class="overflow-hidden" style="max-width: 800px; max-height: 400px;">
+        <asset:image src="portada.png" class="img-fluid w-100 h-100" style="object-fit: contain;" alt="Principal"/>
+    </div>
+</div>
+
     <div class="row g-4 justify-content-center">        
         <div class="col-12 col-md-5">
             <a class="card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
@@ -70,6 +77,8 @@
             </a>
         </div>
     </div>
+
+    
 </div>
 
 <script type="text/javascript">

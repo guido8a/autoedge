@@ -28,9 +28,8 @@
 <nav class="navbar navbar-expand-lg bg-body border-bottom shadow-sm">
     <div class="container-fluid d-flex justify-content-center">
         <a class="navbar-brand d-flex align-items-center justify-content-center text-center gap-2" href="#">
-            <%-- <i class="fa fa-robot text-info fa-2x"></i>  --%>
-            <i class="fa-solid fa-pen-to-square fa-3x"></i>
-            <span style="font-size:2em">Automatización para el MFC (Módulo Facilitador de la Contratación Pública)</span>
+            <i class="fa-solid fa-pen-to-square fa-2x"></i>
+            <span style="font-size:1em">Automatización para el MFC (Módulo Facilitador de la Contratación Pública)</span>
         </a>
     </div>
 </nav>

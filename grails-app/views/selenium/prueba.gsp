@@ -26,7 +26,7 @@
             <g:textField name="numero" id="numeroOferta" class="form-control" value="${1}"/>
         </div>
         <div class="col-md-2">
-            <a href="#" class="btn btn-dark" id="btnAceptar"><i class="fa fa-check"></i> Aceptar</a>
+            <a href="#" class="btn btn-primary" id="btnAceptar"><i class="fa fa-check"></i> Aceptar</a>
         </div>
     </div>
 </div>
@@ -48,7 +48,7 @@
             <g:textField name="numeroPersonal" id="numeroPersonal" class="form-control" value="${1}"/>
         </div>
         <div class="col-md-2">
-           <a href="#" class="btn btn-dark" id="btnCargarExperiencia"><i class="fa fa-check"></i> Aceptar</a>
+           <a href="#" class="btn btn-primary" id="btnCargarExperiencia"><i class="fa fa-check"></i> Aceptar</a>
         </div>
     </div>
 </div>
@@ -65,7 +65,7 @@
             <g:textField name="numeroOfertaCargaArchivo" id="numeroOfertaCargaArchivo" class="form-control" value="${1}"/>
         </div>
         <div class="col-md-2">
-            <a href="#" class="btn btn-dark" id="btnCargarArchivo"><i class="fa fa-check"></i> Aceptar</a>
+            <a href="#" class="btn btn-primary" id="btnCargarArchivo"><i class="fa fa-check"></i> Aceptar</a>
         </div>
     </div>
 </div>
@@ -97,13 +97,13 @@
            class="form-control" value="${1}"/>
         </div>
         <div class="col-md-2">
-           <a href="#" class="btn btn-dark" id="btnCargarExperienciaOferente"><i class="fa fa-check"></i> Aceptar</a>
+           <a href="#" class="btn btn-primary" id="btnCargarExperienciaOferente"><i class="fa fa-check"></i> Aceptar</a>
         </div>
     </div>
 </div>
 
     <div class="col-md-2">
-        <a href="#" class="btn btn-dark" id="btnRegresar"><i class="fa fa-arrow-left"></i> Regresar</a>
+        <a href="#" class="btn btn-primary" id="btnRegresar"><i class="fa fa-arrow-left"></i> Regresar</a>
     </div>
 
 <script type="text/javascript">

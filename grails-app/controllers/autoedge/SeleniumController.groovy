@@ -721,4 +721,8 @@ class SeleniumController {
     def columnas_ajax(){
         
     }
+
+    def formato_ajax(){
+        return [tipo: params.tipo]
+    }
 }
