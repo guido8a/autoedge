@@ -115,24 +115,25 @@
                     </div>
                 </div>
     
-                <g:uploadForm action="procesaExcel" method="POST" name="frmUpload"
+                <g:uploadForm action="procesarArchivosAnexos" method="POST" name="frmUpload"
                     enctype="multipart/form-data">
                     <div class="row g-3 align-items-end">
                         <div class="col-md-1">
                             <label for="ofrt" class="form-label">Oferta:</label>
                             <input type="text" name="ofrt" id="ofrt" class="form-control required" min="1" value="${1}" />
                         </div>
-                        <div class="col-md-6">
-                            <label for="file" class="form-label">Archivo Excel con los datos a subir:</label>
-                            <input type="file" name="archivo" id="archivo" accept=".xlsx" class="form-control required" />
-                        </div>
+                        <div class="col-md-6 h-100">
+                            <div class="alert alert-warning py-1 px-3 d-flex align-items-center h-100 m-0" style="min-height: 38px;">
+                            <span><strong>Ruta de los archivos:</strong>   C:\agente\anexos</span>
+                            </div>
+                        </div>  
                         <div class="col-md-5 d-flex gap-2">
                             <a href="#" class="btn btn-success w-70 text-nowrap" id="btnSubmit">
                                 <i class="fa fa-upload"></i> Procesar Archivo
                             </a>
-                            <a href="#" class="btn btn-warning w-70 text-nowrap" id="btnVerFormatoAnexos">
+                            <%-- <a href="#" class="btn btn-warning w-70 text-nowrap" id="btnVerFormatoAnexos">
                                 <i class="fa fa-list"></i> Formato
-                            </a>
+                            </a> --%>
                         </div>
                     </div>
                 </g:uploadForm>

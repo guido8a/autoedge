@@ -1324,24 +1324,7 @@ class SeleniumService {
                     )
                     js.executeScript("if (document.activeElement) { document.activeElement.blur(); }")
 
-                // //fecha de recepcion
-
-                // WebElement inputFechaRecepcion = wait.until(
-                //         ExpectedConditions.presenceOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_fechaRecepcion"))
-                // )
-
-                // JavascriptExecutor js2 = (JavascriptExecutor) driver
-
-                // js2.executeScript("arguments[0].removeAttribute('readonly');", inputFechaRecepcion)
-
-                // inputFechaRecepcion.clear()
-                // inputFechaRecepcion.sendKeys(fila[5]?.toString())
-
-                // js2.executeScript("arguments[0].dispatchEvent(new Event('change'));", inputFechaRecepcion)
-                // js2.executeScript("arguments[0].dispatchEvent(new Event('blur'));", inputFechaRecepcion)
-            
-                //objeto
-
+ 
                 def campoObjeto= wait.until(
                         ExpectedConditions.visibilityOfElementLocated(By.id("incop_mfc_ofertasbundle_tmepformoferexpeofer_objetoContrato"))
                 )
@@ -1438,6 +1421,95 @@ class SeleniumService {
             if (driver != null) {
                 driver.quit()
                 println "=== Terminado correctamente ==="
+            }
+        }
+    }
+
+     def cargaAnexosNuevo(int oferta, List rgst) {
+        println "=== Inicia carga anexos con excel ==="
+        println("rgst" + rgst)
+        WebDriver driver = crearDriver()
+        def correctos = []
+
+        try {
+            WebDriverWait wait  = new WebDriverWait(driver, Duration.ofSeconds(10))
+            WebDriverWait wait2 = new WebDriverWait(driver, Duration.ofSeconds(15))
+            WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
+            WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
+
+            driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            def ingreso = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.id("btn_inicio_abajo"))
+            )
+            ingreso.click()
+
+            // OFERTAS
+            def abrirOfertas = wait2.until(
+                    ExpectedConditions.visibilityOfElementLocated(By.xpath('//*[@title="Ofertas"]'))
+            )
+            abrirOfertas.click()
+
+            //OFERTA SELECCIONADA
+            if (!verificarSiUrlExiste("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")) {
+                log.error("El proceso se detuvo: La URL no existe o no responde.")
+                driver.get("http://localhost:6012/mfc-oa/web/app.php")
+            } else {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/edicion/${oferta}")
+
+                //ANEXOS
+                def ingresoAnexos = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("btnArchivos"))
+                )
+                ingresoAnexos.click()
+
+                rgst.collate(2).each{ fila ->
+                    println("--> " + fila)  
+
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
+
+                //Descripcion
+                def campoDescripcion = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.id("form_descripcion"))
+                )
+                campoDescripcion.clear()
+                campoDescripcion.sendKeys(fila[0]?.toString()) 
+
+                //clic antes de cargar
+                def campoArchivo = wait.until(
+                        ExpectedConditions.visibilityOfElementLocated(By.className("input-file"))
+                )
+                campoArchivo.click()
+
+                //cargar archivo
+                String rutaAbsoluta = "C:/agente/anexos/" + fila[1]
+
+                WebElement inputArchivo = wait.until(
+                        ExpectedConditions.presenceOfElementLocated(By.id("form_file"))
+                )
+
+                inputArchivo.sendKeys(rutaAbsoluta)
+
+                //boton guardar
+                def guardarAnexo = wait.until(
+                        ExpectedConditions.elementToBeClickable(By.id("submit")) )
+                guardarAnexo.click()
+
+                correctos.add(fila[1]?.toString())
+
+                }  
+
+                return correctos                           
+            }
+
+        } catch (Exception e ) {
+            println "Ocurrió un error en Selenium: ${e.message}"
+            e.printStackTrace()
+           redirect(controller:'selenium', action:'error', params: [error: e.message])
+        } finally {
+            if (driver != null) {
+                driver.get("http://localhost:6012/mfc-oa/web/app.php/ofertas/archivos/subir")
+                driver.quit()
+                println "=== Terminado carga de anexo con excel correctamente ==="
             }
         }
     }

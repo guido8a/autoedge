@@ -108,6 +108,8 @@ class SeleniumController {
      * Recibe el archivo subido y lo procesa.
      * POST /autoedge/selenium/upload
      */
+
+    //CARGADO DE ANEXOS POR EXCEL (ANTIGUO)
     def procesaExcel() {
         println "params: $params"
         def f = request.getFile('archivo') 
@@ -708,6 +710,80 @@ class SeleniumController {
             redirect(action: "error", params: [mensajeError: e.message, seccion: " experiencia oferente EXCEL"])
 
         }        
+    }
+
+    //CARGA ANEXOS DESDE CARPETA
+    def procesarArchivosAnexos() {
+        println "params: $params"
+
+        def os = System.getProperty("os.name").toLowerCase()
+        def path = "" 
+        def pathAnexos = ""
+        def nombresArchivos = []
+
+        if (os.contains("win")) {
+            println "Estás en Windows"
+            path = "C:\\agente\\oferta_${params.ofrt}" 
+            pathAnexos = "C:\\agente\\anexos" 
+        } else if (os.contains("linux")) {
+            println "Estás en Linux"
+            path = "/var/agente/oferta_${params.ofrt}" 
+            pathAnexos = "/var/agente/anexos" 
+        } else if (os.contains("mac")) {
+            println "Estás en macOS"
+            path = "/var/agente/oferta_${params.ofrt}" 
+            pathAnexos = "/var/agente/anexos" 
+        }
+        new File(path).mkdirs()
+    
+        //leer la carpeta anexos
+
+        def carpeta = new File(pathAnexos)
+
+        // 2. Verifica que la carpeta exista y realmente sea un directorio
+        if (carpeta.exists() && carpeta.isDirectory()) {
+    
+        // 3. Itera solo sobre los archivos (omitiendo subcarpetas si las hay)
+        carpeta.eachFile { file ->
+        if (file.isFile()) {
+            println "Nombre: ${file.name}" 
+
+            def fileName = file.name
+            def parts = fileName.split("\\.")
+            def extension = parts.length > 1 ? parts[parts.length - 1] : ""
+
+            nombresArchivos.add(parts[0])
+            nombresArchivos.add(fileName)
+
+        def pathFile = path + File.separator + fileName
+
+        //Borrar el archivo anterior si existe
+        def oldFile = new File(pathFile)
+        if (oldFile.exists()) {
+            oldFile.delete()
+        }
+        
+        //Guardar el archivo subido en el nuevo path
+         oldFile << file.bytes 
+
+            }
+        }
+            println("Archivos " + nombresArchivos)
+
+            } else {
+                println "Error: La carpeta en la ruta '${rutaCarpeta}' no existe."
+            }
+
+        println "inicia procesar excel"
+
+        try {
+                def listaOriginal =  seleniumService.cargaAnexosNuevo(params.ofrt?.toInteger(), nombresArchivos)
+                flash.correctos = listaOriginal ? listaOriginal.collate(1) : []
+                redirect(action: "archivoSubido", params: [seccion: " cargado de anexos EXCEL"])
+        } catch (Exception e) {
+          redirect(action: "error", params: [mensajeError: e.message, seccion: " cargado de anexos EXCEL"])
+        }
+
     }
 
     def archivoSubido(){
