@@ -15,7 +15,7 @@
             </ul>
         </div>
 
-        <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-warning"
+        <%-- <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-warning"
             style="margin-top: 10px;">
             <h4>Hoja n°1: <strong class="text-success"> Anexos </strong></h4>
             <div class="alert alert-warning py-1">
@@ -51,7 +51,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        </div> --%>
         <div class="col-md-12 card h-100 text-decoration-none shadow-sm border-1 hover-card hover-card-info"
             style="margin-top: 10px;">
             <h4>Hoja n°2: <strong class="text-success"> Experiencia oferente </strong></h4>

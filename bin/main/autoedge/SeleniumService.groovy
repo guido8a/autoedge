@@ -61,6 +61,7 @@ class SeleniumService {
 
         WebDriver driver = crearDriver()
         def correctos = []
+        JavascriptExecutor js4 = (JavascriptExecutor) driver
 
         try {
 
@@ -69,6 +70,21 @@ class SeleniumService {
             WebDriverWait wait3 = new WebDriverWait(driver, Duration.ofSeconds(20))
             WebDriverWait wait4 = new WebDriverWait(driver, Duration.ofSeconds(5))
             driver.get("http://localhost:6012/mfc-oa/web/app.php")
+
+              def clickSeguro = { WebElement el, String nombre ->
+                try {
+                    js4.executeScript("arguments[0].scrollIntoView({block:'center'});", el)
+                    Thread.sleep(200)
+                    try {
+                        wait.until(ExpectedConditions.elementToBeClickable(el)).click()
+                    } catch (Exception e1) {
+                        println "Clic normal en '${nombre}' interceptado; usando JS: ${e1.message}"
+                        js4.executeScript("arguments[0].click();", el)
+                    }
+                } catch (Exception e) {
+                    throw new RuntimeException("No se pudo hacer clic en '${nombre}': ${e.message}", e)
+                }
+            }
 
 
             def ingreso = wait2.until(
@@ -235,20 +251,10 @@ class SeleniumService {
                 campoObservacion.sendKeys("NINGUNA")
 
                 //boton guardar
-
-                def guardarPersonal = wait.until(
-                        ExpectedConditions.elementToBeClickable(By.id("guardarPersonalTecnico")) )
-                guardarPersonal.click()
-
-                def guardarPersonal2 = wait.until(
-                        ExpectedConditions.elementToBeClickable(By.id("guardarPersonalTecnico")) )
-                guardarPersonal2.click()
-
-                WebElement botonGuardar = driver.findElement(By.id("guardarPersonalTecnico"))
-
-                JavascriptExecutor js3 = (JavascriptExecutor) driver
-                js3.executeScript("arguments.focus();", botonGuardar)
-                js3.executeScript("arguments.click();", botonGuardar)
+                    def guardarPersonal = wait.until(
+                            ExpectedConditions.presenceOfElementLocated(By.id("guardarPersonalTecnico"))
+                    )
+                    clickSeguro(guardarPersonal, "Guardar personal técnico")
 
                 correctos.add("1716473325")
                 correctos.add("Pedro Perez")
